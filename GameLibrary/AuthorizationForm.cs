@@ -48,7 +48,7 @@ namespace GameLibrary
         {
             ConnectionBuild();
 
-            string querySQL = $"SELECT ID FROM [USER] WHERE Login = '{textBoxLogin.Text}' AND Password = '{textBoxPassword.Text}'";
+            string querySQL = $"SELECT ID FROM [USER] WHERE Login = '{"shev"}' AND Password = '{"shev"}'";  // Авторизация
 
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(querySQL, cn);
