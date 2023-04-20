@@ -20,6 +20,9 @@ namespace GameLibrary
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
         PictureBox[] picBoxes;
+        int currentPage = 1;
+        int minGameID = 0;
+        int maxGameID = 18;
 
         public MainWindow(int UserID, SqlConnection sqlCon)
         {
@@ -30,6 +33,14 @@ namespace GameLibrary
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
             picBoxes = new[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16, pictureBox17, pictureBox18 };
             CatalogLoad();
+            GetProfile();
+        }
+
+        private void GetProfile()
+        {
+            GetTableByQuery($"SELECT * FROM [User] INNER JOIN [Profile] ON ProfileID = [Profile].ID WHERE [User].ID = {UserID}");
+            labelUserName.Text = table.Rows[0].Field<string>("Username");
+            pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
         }
 
 
@@ -101,7 +112,8 @@ namespace GameLibrary
         
         private void CatalogLoad()
         {
-            string querySQL = "SELECT TOP(18) * FROM Game";
+            
+            string querySQL = $"SELECT * FROM Game WHERE ID >= {minGameID} AND ID < {maxGameID}";
             GetTableByQuery(querySQL);
 
             for (int i = 0; i < table.Rows.Count; i++)
@@ -109,17 +121,26 @@ namespace GameLibrary
                 try
                 {
                     picBoxes[i].Image = ConvertByteArrayToImage(table.Rows[i].Field<byte[]>("Image"));
+                    gameLabelsName[i].Text = table.Rows[i].Field<string>("Name");
+                    if (table.Rows[i].Field<Decimal>("Price") == 0)
+                        gameLabelsPrice[i].Text = "Бесплатно";
+                    else
+                        gameLabelsPrice[i].Text = Math.Round(table.Rows[i].Field<Decimal>("Price"), 2).ToString() + " RUB";
                 }
                 catch
                 {
-
+                    MessageBox.Show("Внимание!", "Ошибка при загрузке каталога");
                 }
-                
-                gameLabelsName[i].Text = table.Rows[i].Field<string>("Name");
-                if (table.Rows[i].Field<Decimal>("Price") == 0)
-                    gameLabelsPrice[i].Text = "Бесплатно";
-                else
-                    gameLabelsPrice[i].Text = Math.Round(table.Rows[i].Field<Decimal>("Price"),2).ToString() + " RUB";
+            }
+        }
+
+        private void CatalogClear()
+        {
+            for (int i = 0; i < 18; i++)
+            {
+                picBoxes[i].Image = null;
+                gameLabelsName[i].Text = "";
+                gameLabelsPrice[i].Text = "";
             }
         }
 
@@ -140,6 +161,40 @@ namespace GameLibrary
         private void button1_Click(object sender, EventArgs e)
         {
             SetPhoto();
+        }
+
+        private void pictureBoxRight_Click(object sender, EventArgs e)
+        {
+            if (pictureBox18.Image != null)
+            {
+                CatalogClear();
+
+                currentPage++;
+                labelCurrentPage.Text = currentPage.ToString();
+
+                UpdateRange(18);
+                CatalogLoad();
+            }
+        }
+
+        private void pictureBoxLeft_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                CatalogClear();
+
+                currentPage--;
+                labelCurrentPage.Text = currentPage.ToString();
+
+                UpdateRange(-18);
+                CatalogLoad();
+            }
+        }
+
+        private void UpdateRange(int value)
+        {
+            minGameID += value;
+            maxGameID += value;
         }
     }
 }

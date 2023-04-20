@@ -125,5 +125,11 @@
   <ItemGroup>
     <None Include="Properties\Res\boxmainlogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\strelkaLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\strelkaRight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
