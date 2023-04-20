@@ -320,6 +320,7 @@
             this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox13.TabIndex = 0;
             this.pictureBox13.TabStop = false;
+            this.pictureBox13.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox13.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox13.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -361,6 +362,7 @@
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox10.TabIndex = 0;
             this.pictureBox10.TabStop = false;
+            this.pictureBox10.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox10.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox10.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -402,6 +404,7 @@
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox8.TabIndex = 0;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox8.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox8.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -443,6 +446,7 @@
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox7.TabIndex = 0;
             this.pictureBox7.TabStop = false;
+            this.pictureBox7.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox7.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox7.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -484,6 +488,7 @@
             this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox14.TabIndex = 0;
             this.pictureBox14.TabStop = false;
+            this.pictureBox14.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox14.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox14.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -525,6 +530,7 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox6.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox6.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -566,6 +572,7 @@
             this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox15.TabIndex = 0;
             this.pictureBox15.TabStop = false;
+            this.pictureBox15.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox15.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox15.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -607,6 +614,7 @@
             this.pictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox16.TabIndex = 0;
             this.pictureBox16.TabStop = false;
+            this.pictureBox16.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox16.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox16.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -648,6 +656,7 @@
             this.pictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox17.TabIndex = 0;
             this.pictureBox17.TabStop = false;
+            this.pictureBox17.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox17.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox17.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -689,6 +698,7 @@
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox5.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox5.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -730,6 +740,7 @@
             this.pictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox18.TabIndex = 0;
             this.pictureBox18.TabStop = false;
+            this.pictureBox18.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox18.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox18.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -771,6 +782,7 @@
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox9.TabIndex = 0;
             this.pictureBox9.TabStop = false;
+            this.pictureBox9.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox9.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox9.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -812,6 +824,7 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 0;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox4.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox4.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -853,6 +866,7 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox3.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox3.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -894,6 +908,7 @@
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox11.TabIndex = 0;
             this.pictureBox11.TabStop = false;
+            this.pictureBox11.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox11.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox11.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -936,6 +951,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -977,6 +993,7 @@
             this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox12.TabIndex = 0;
             this.pictureBox12.TabStop = false;
+            this.pictureBox12.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox12.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox12.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
@@ -1019,6 +1036,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 

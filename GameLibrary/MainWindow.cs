@@ -20,7 +20,7 @@ namespace GameLibrary
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
         PictureBox[] picBoxes;
-        int currentPage = 1;
+        int currentPage = 0;
         int minGameID = 0;
         int maxGameID = 18;
 
@@ -157,6 +157,12 @@ namespace GameLibrary
             selectedPB.Location = new Point(selectedPB.Location.X + 2, selectedPB.Location.Y + 2);
             selectedPB.Size = new Size(selectedPB.Width - 5, selectedPB.Height - 5);
         }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18),connection);
+            obj.Show();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -170,7 +176,7 @@ namespace GameLibrary
                 CatalogClear();
 
                 currentPage++;
-                labelCurrentPage.Text = currentPage.ToString();
+                labelCurrentPage.Text = (currentPage + 1).ToString();
 
                 UpdateRange(18);
                 CatalogLoad();
@@ -179,12 +185,12 @@ namespace GameLibrary
 
         private void pictureBoxLeft_Click(object sender, EventArgs e)
         {
-            if (currentPage > 1)
+            if (currentPage > 0)
             {
                 CatalogClear();
 
                 currentPage--;
-                labelCurrentPage.Text = currentPage.ToString();
+                labelCurrentPage.Text = (currentPage + 1).ToString();
 
                 UpdateRange(-18);
                 CatalogLoad();
@@ -196,5 +202,7 @@ namespace GameLibrary
             minGameID += value;
             maxGameID += value;
         }
+
+       
     }
 }
