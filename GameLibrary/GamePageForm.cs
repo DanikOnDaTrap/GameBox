@@ -20,6 +20,8 @@ namespace GameLibrary
         DataTable subTableCategory;
         DataTable subTableDeveloper;
         int gameID;
+        public List<int> cart;
+        bool addedToCart = false;
 
         public GamePageForm(int productID, SqlConnection cn)
         {
@@ -45,19 +47,20 @@ namespace GameLibrary
         private void LoadData()
         {
             labelName.Text = table.Rows[0].Field<string>("Name");
+            this.Text = table.Rows[0].Field<string>("Name");
             labelDescription.Text = table.Rows[0].Field<string>("Description");
             labelAge.Text = table.Rows[0].Field<int>("AgeRating").ToString() + "+";
             labelCategory.Text = "Категория: " + subTableCategory.Rows[0].Field<string>("Name");
             labelDeveloper.Text = "Разработчик: " + subTableDeveloper.Rows[0].Field<string>("Name");
-            if (table.Rows[0].Field<Decimal>("Price") == 0)
-                labelPrice.Text = "Бесплатно";
-            else
-                labelPrice.Text = Math.Round(table.Rows[0].Field<Decimal>("Price"), 2).ToString() + " RUB";
-            //labelReleaseDate.Text = "Дата выхода: " + table.Rows[0].Field<string>("ReleaseDate");
+            labelReleaseDate.Text = "Дата выхода: " + table.Rows[0].Field<DateTime>("ReleaseDate").ToLongDateString();
             labelSystem.Text = table.Rows[0].Field<string>("SystemRequirements");
             pictureBoxLogo.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Image"));
             labelUserScore.Text = "Оценка игроков: " + table.Rows[0].Field<double>("UserScore").ToString() + " / 10";
             labelPressScore.Text = "Оценка прессы: " + table.Rows[0].Field<double>("PressScore").ToString() + " / 10";
+            if (table.Rows[0].Field<Decimal>("Price") == 0)
+                labelPrice.Text = "Бесплатно";
+            else
+                labelPrice.Text = Math.Round(table.Rows[0].Field<Decimal>("Price"), 2).ToString() + " RUB";
         }
 
         public Image ConvertByteArrayToImage(byte[] data)
@@ -67,6 +70,40 @@ namespace GameLibrary
                 return
                 Image.FromStream(ms);
             }
+        }
+
+        private void buttonAddToCart_Click(object sender, EventArgs e)
+        {
+            if (addedToCart == false)
+            {
+                cart.Add(this.gameID);
+                CartAdd();
+            }
+            else
+            {
+                cart.Remove(this.gameID);
+                CartRemove();
+            }
+        }
+
+        public void CartAdd()
+        {
+            buttonAddToCart.Text = "В корзине!";
+            addedToCart = true;
+        }
+
+        public void CartRemove()
+        {
+            buttonAddToCart.Text = "Добавить в корзину";
+            addedToCart = false;
+        }
+
+        private void GamePageForm_Load(object sender, EventArgs e)
+        {
+            if (cart.Contains(this.gameID))
+                CartAdd();
+            else
+                CartRemove();
         }
     }
 }

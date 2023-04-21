@@ -17,12 +17,14 @@ namespace GameLibrary
         int UserID;
         SqlConnection connection;
         DataTable table;
+        DataTable FullProductTable;
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
         PictureBox[] picBoxes;
         int currentPage = 0;
         int minGameID = 0;
         int maxGameID = 18;
+        public List<int> cart = new List<int>();
 
         public MainWindow(int UserID, SqlConnection sqlCon)
         {
@@ -32,8 +34,11 @@ namespace GameLibrary
             gameLabelsName = new[] { label2, label4, label6, label8, label10, label12, label14, label16, label18, label20, label22, label24, label26, label28, label30, label32, label34, label36};
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
             picBoxes = new[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16, pictureBox17, pictureBox18 };
+
+            GetProfile(); 
             CatalogLoad();
-            GetProfile();
+            GetFullTable();
+            CartInfo();
         }
 
         private void GetProfile()
@@ -41,9 +46,33 @@ namespace GameLibrary
             GetTableByQuery($"SELECT * FROM [User] INNER JOIN [Profile] ON ProfileID = [Profile].ID WHERE [User].ID = {UserID}");
             labelUserName.Text = table.Rows[0].Field<string>("Username");
             pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
+            labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
         }
 
+        private void CartInfo()
+        {
+            labelCart.Text = $"Количество товаров: {cart.Count} \nНа сумму {Math.Round(GetCartSum(), 2).ToString()} рублей";
+        }
 
+        private decimal GetCartSum()
+        {
+            decimal sum = 0;
+            for (int i = 0; i < cart.Count; i++)
+            {
+                sum += FullProductTable.Rows[cart[i]].Field<decimal>("Price");
+            }
+            return sum;
+        }
+
+        private void GetFullTable()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Game", connection);
+            FullProductTable = new DataTable();
+
+            adapter.SelectCommand = cmd;
+            adapter.Fill(FullProductTable);
+        }
 
 
 
@@ -62,7 +91,7 @@ namespace GameLibrary
                     pictureBox1.Image = Image.FromFile(ofd.FileName);
                 }
             }
-            Insert(ConvertImageToBytes(pictureBox1.Image), Int32.Parse(textBox1.Text));
+            //Insert(ConvertImageToBytes(pictureBox1.Image), Int32.Parse(textBox1.Text));
         }
         public void Insert(byte[] image, int currentID)
         {
@@ -161,12 +190,9 @@ namespace GameLibrary
         {
             PictureBox selectedPB = sender as PictureBox;
             GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18),connection);
-            obj.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SetPhoto();
+            obj.cart = this.cart;
+            obj.ShowDialog();
+            CartInfo();
         }
 
         private void pictureBoxRight_Click(object sender, EventArgs e)
@@ -202,7 +228,5 @@ namespace GameLibrary
             minGameID += value;
             maxGameID += value;
         }
-
-       
     }
 }

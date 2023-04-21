@@ -37,8 +37,6 @@
             this.pictureBoxLeft = new System.Windows.Forms.PictureBox();
             this.labelUserName = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -113,6 +111,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPageCollection = new System.Windows.Forms.TabPage();
             this.tabPageCommunity = new System.Windows.Forms.TabPage();
+            this.labelBalance = new System.Windows.Forms.Label();
+            this.buttonCart = new System.Windows.Forms.Button();
+            this.labelCart = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageStore.SuspendLayout();
             this.panel19.SuspendLayout();
@@ -172,11 +173,12 @@
             // tabPageStore
             // 
             this.tabPageStore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPageStore.Controls.Add(this.labelCart);
+            this.tabPageStore.Controls.Add(this.buttonCart);
+            this.tabPageStore.Controls.Add(this.labelBalance);
             this.tabPageStore.Controls.Add(this.panel19);
             this.tabPageStore.Controls.Add(this.labelUserName);
             this.tabPageStore.Controls.Add(this.pictureBoxProfile);
-            this.tabPageStore.Controls.Add(this.textBox1);
-            this.tabPageStore.Controls.Add(this.button1);
             this.tabPageStore.Controls.Add(this.panel13);
             this.tabPageStore.Controls.Add(this.panel10);
             this.tabPageStore.Controls.Add(this.panel8);
@@ -247,12 +249,11 @@
             // 
             // labelUserName
             // 
-            this.labelUserName.AutoSize = true;
             this.labelUserName.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelUserName.ForeColor = System.Drawing.Color.White;
-            this.labelUserName.Location = new System.Drawing.Point(74, 970);
+            this.labelUserName.Location = new System.Drawing.Point(74, 980);
             this.labelUserName.Name = "labelUserName";
-            this.labelUserName.Size = new System.Drawing.Size(140, 30);
+            this.labelUserName.Size = new System.Drawing.Size(277, 30);
             this.labelUserName.TabIndex = 19;
             this.labelUserName.Text = "USERNAME";
             // 
@@ -264,23 +265,6 @@
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 18;
             this.pictureBoxProfile.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(656, 969);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 31);
-            this.textBox1.TabIndex = 17;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(490, 969);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 38);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel13
             // 
@@ -1058,6 +1042,37 @@
             this.tabPageCommunity.TabIndex = 2;
             this.tabPageCommunity.Text = "Сообщество";
             // 
+            // labelBalance
+            // 
+            this.labelBalance.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelBalance.ForeColor = System.Drawing.Color.White;
+            this.labelBalance.Location = new System.Drawing.Point(75, 954);
+            this.labelBalance.Name = "labelBalance";
+            this.labelBalance.Size = new System.Drawing.Size(277, 26);
+            this.labelBalance.TabIndex = 21;
+            this.labelBalance.Text = "BANK";
+            // 
+            // buttonCart
+            // 
+            this.buttonCart.Location = new System.Drawing.Point(599, 980);
+            this.buttonCart.Name = "buttonCart";
+            this.buttonCart.Size = new System.Drawing.Size(207, 40);
+            this.buttonCart.TabIndex = 22;
+            this.buttonCart.Text = "Открыть корзину";
+            this.buttonCart.UseVisualStyleBackColor = true;
+            // 
+            // labelCart
+            // 
+            this.labelCart.AutoSize = true;
+            this.labelCart.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelCart.ForeColor = System.Drawing.Color.White;
+            this.labelCart.Location = new System.Drawing.Point(605, 939);
+            this.labelCart.Name = "labelCart";
+            this.labelCart.Size = new System.Drawing.Size(196, 40);
+            this.labelCart.TabIndex = 23;
+            this.labelCart.Text = "Количество товаров: 54\r\nНа сумму 100000 рублей";
+            this.labelCart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1214,13 +1229,14 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.PictureBox pictureBox18;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label labelUserName;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.PictureBox pictureBoxRight;
         private System.Windows.Forms.PictureBox pictureBoxLeft;
         private System.Windows.Forms.Label labelCurrentPage;
+        private System.Windows.Forms.Label labelBalance;
+        private System.Windows.Forms.Label labelCart;
+        private System.Windows.Forms.Button buttonCart;
     }
 }

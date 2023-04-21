@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePageForm));
             this.labelName = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
@@ -40,6 +41,7 @@
             this.buttonAddToCart = new System.Windows.Forms.Button();
             this.labelPrice = new System.Windows.Forms.Label();
             this.labelAge = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +58,7 @@
             // 
             // labelDescription
             // 
-            this.labelDescription.BackColor = System.Drawing.Color.Transparent;
+            this.labelDescription.BackColor = System.Drawing.Color.Silver;
             this.labelDescription.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDescription.ForeColor = System.Drawing.Color.Black;
             this.labelDescription.Location = new System.Drawing.Point(14, 219);
@@ -76,29 +78,29 @@
             // 
             // labelSystem
             // 
-            this.labelSystem.BackColor = System.Drawing.Color.Transparent;
+            this.labelSystem.BackColor = System.Drawing.Color.Silver;
             this.labelSystem.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelSystem.ForeColor = System.Drawing.Color.Black;
             this.labelSystem.Location = new System.Drawing.Point(14, 573);
             this.labelSystem.Name = "labelSystem";
-            this.labelSystem.Size = new System.Drawing.Size(594, 212);
+            this.labelSystem.Size = new System.Drawing.Size(594, 219);
             this.labelSystem.TabIndex = 23;
             this.labelSystem.Text = "SYS REQ";
             // 
             // labelDeveloper
             // 
-            this.labelDeveloper.BackColor = System.Drawing.Color.Gray;
+            this.labelDeveloper.BackColor = System.Drawing.Color.Silver;
             this.labelDeveloper.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDeveloper.ForeColor = System.Drawing.Color.Black;
-            this.labelDeveloper.Location = new System.Drawing.Point(729, 652);
+            this.labelDeveloper.Location = new System.Drawing.Point(729, 629);
             this.labelDeveloper.Name = "labelDeveloper";
-            this.labelDeveloper.Size = new System.Drawing.Size(299, 28);
+            this.labelDeveloper.Size = new System.Drawing.Size(299, 51);
             this.labelDeveloper.TabIndex = 25;
             this.labelDeveloper.Text = "DEVELOPER HERE";
             // 
             // labelCategory
             // 
-            this.labelCategory.BackColor = System.Drawing.Color.Gray;
+            this.labelCategory.BackColor = System.Drawing.Color.Silver;
             this.labelCategory.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelCategory.ForeColor = System.Drawing.Color.Black;
             this.labelCategory.Location = new System.Drawing.Point(729, 680);
@@ -109,10 +111,10 @@
             // 
             // labelReleaseDate
             // 
-            this.labelReleaseDate.BackColor = System.Drawing.Color.Gray;
+            this.labelReleaseDate.BackColor = System.Drawing.Color.Transparent;
             this.labelReleaseDate.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelReleaseDate.ForeColor = System.Drawing.Color.Black;
-            this.labelReleaseDate.Location = new System.Drawing.Point(729, 708);
+            this.labelReleaseDate.Location = new System.Drawing.Point(16, 179);
             this.labelReleaseDate.Name = "labelReleaseDate";
             this.labelReleaseDate.Size = new System.Drawing.Size(299, 28);
             this.labelReleaseDate.TabIndex = 27;
@@ -120,7 +122,7 @@
             // 
             // labelPressScore
             // 
-            this.labelPressScore.BackColor = System.Drawing.Color.Gray;
+            this.labelPressScore.BackColor = System.Drawing.Color.Silver;
             this.labelPressScore.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelPressScore.ForeColor = System.Drawing.Color.Black;
             this.labelPressScore.Location = new System.Drawing.Point(729, 764);
@@ -131,7 +133,7 @@
             // 
             // labelUserScore
             // 
-            this.labelUserScore.BackColor = System.Drawing.Color.Gray;
+            this.labelUserScore.BackColor = System.Drawing.Color.Silver;
             this.labelUserScore.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelUserScore.ForeColor = System.Drawing.Color.Black;
             this.labelUserScore.Location = new System.Drawing.Point(729, 736);
@@ -142,7 +144,7 @@
             // 
             // buttonAddToCart
             // 
-            this.buttonAddToCart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAddToCart.BackColor = System.Drawing.Color.Silver;
             this.buttonAddToCart.Font = new System.Drawing.Font("Century Gothic", 15.75F);
             this.buttonAddToCart.Location = new System.Drawing.Point(733, 451);
             this.buttonAddToCart.Name = "buttonAddToCart";
@@ -150,6 +152,7 @@
             this.buttonAddToCart.TabIndex = 30;
             this.buttonAddToCart.Text = "Добавить в корзину";
             this.buttonAddToCart.UseVisualStyleBackColor = false;
+            this.buttonAddToCart.Click += new System.EventHandler(this.buttonAddToCart_Click);
             // 
             // labelPrice
             // 
@@ -175,12 +178,24 @@
             this.labelAge.Text = "AGE";
             this.labelAge.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(16, 545);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(280, 28);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "Системные требования:";
+            // 
             // GamePageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
             this.ClientSize = new System.Drawing.Size(1055, 815);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelAge);
             this.Controls.Add(this.labelPrice);
             this.Controls.Add(this.buttonAddToCart);
@@ -194,9 +209,11 @@
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.labelName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "GamePageForm";
             this.Text = "GamePageForm";
+            this.Load += new System.EventHandler(this.GamePageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
 
@@ -216,5 +233,6 @@
         private System.Windows.Forms.Button buttonAddToCart;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelAge;
+        private System.Windows.Forms.Label label1;
     }
 }

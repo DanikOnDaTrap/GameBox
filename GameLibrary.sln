@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLibrary", "GameLibrary\GameLibrary.csproj", "{99B1D2C7-DF9D-49E6-A09E-E5E049D0A6B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiptBuilder", "ReceiptBuilder\ReceiptBuilder.csproj", "{E9423CE9-A7CA-4CA4-83F2-97F76408C46A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{99B1D2C7-DF9D-49E6-A09E-E5E049D0A6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99B1D2C7-DF9D-49E6-A09E-E5E049D0A6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99B1D2C7-DF9D-49E6-A09E-E5E049D0A6B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9423CE9-A7CA-4CA4-83F2-97F76408C46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9423CE9-A7CA-4CA4-83F2-97F76408C46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9423CE9-A7CA-4CA4-83F2-97F76408C46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9423CE9-A7CA-4CA4-83F2-97F76408C46A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
