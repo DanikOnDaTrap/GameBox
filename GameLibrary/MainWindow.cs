@@ -20,7 +20,14 @@ namespace GameLibrary
         DataTable FullProductTable;
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
+        Label[] LabelTrending;
+        Label[] LabelTrendingDesc;
         PictureBox[] picBoxes;
+        PictureBox[] PBTrending;
+        PictureBox[] PlatformFirst;
+        PictureBox[] PlatformSecond;
+        PictureBox[] PlatformThird;
+        PictureBox[][] Platforms; 
         int currentPage = 0;
         int minGameID = 0;
         int maxGameID = 18;
@@ -34,11 +41,18 @@ namespace GameLibrary
             gameLabelsName = new[] { label2, label4, label6, label8, label10, label12, label14, label16, label18, label20, label22, label24, label26, label28, label30, label32, label34, label36};
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
             picBoxes = new[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16, pictureBox17, pictureBox18 };
-
+            PBTrending = new[] { pictureBoxTrend1, pictureBoxTrend2, pictureBoxTrend3 };
+            LabelTrending = new[] { labelTrend1, labelTrend2, labelTrend3 };
+            LabelTrendingDesc = new[] { labelTrendDesc1, labelTrendDesc2, labelTrendDesc3 };
+            PlatformFirst = new[] { pictureBoxPlat1, pictureBoxPlat2, pictureBoxPlat3 };
+            PlatformSecond = new[] { pictureBoxPlat4, pictureBoxPlat5, pictureBoxPlat6 };
+            PlatformThird = new[] { pictureBoxPlat7, pictureBoxPlat8, pictureBoxPlat9 };
+            Platforms = new[] { PlatformFirst, PlatformSecond, PlatformThird };
             GetProfile(); 
             CatalogLoad();
             GetFullTable();
             CartInfo();
+            GetTrends();
         }
 
         private void GetProfile()
@@ -72,6 +86,34 @@ namespace GameLibrary
 
             adapter.SelectCommand = cmd;
             adapter.Fill(FullProductTable);
+        }
+
+        private void GetTrends()
+        {
+            string querySQL = $"SELECT * FROM Game ORDER BY UserScore DESC";
+            GetTableByQuery(querySQL);
+            for (int i = 0; i < PBTrending.Length; i++)
+            {
+                PBTrending[i].Image = ConvertByteArrayToImage(table.Rows[i].Field<byte[]>("Image"));
+                LabelTrending[i].Text = table.Rows[i].Field<string>("Name");
+                LabelTrendingDesc[i].Text = table.Rows[i].Field<string>("Description");
+                if (table.Rows[i].Field<bool>("WindowsAvailable"))
+                {
+                    Platforms[i][0].Visible = true;
+                }
+                if (table.Rows[i].Field<bool>("LinuxAvailable"))
+                {
+                    Platforms[i][1].Visible = true;
+                }
+                if (table.Rows[i].Field<bool>("MacAvailable"))
+                {
+                    if (table.Rows[i].Field<bool>("LinuxAvailable") == false)
+                    {
+                        Platforms[i][2].Location = Platforms[i][1].Location;
+                    }
+                    Platforms[i][2].Visible = true;
+                }
+            }
         }
 
 
@@ -141,7 +183,6 @@ namespace GameLibrary
         
         private void CatalogLoad()
         {
-            
             string querySQL = $"SELECT * FROM Game WHERE ID >= {minGameID} AND ID < {maxGameID}";
             GetTableByQuery(querySQL);
 
@@ -228,5 +269,22 @@ namespace GameLibrary
             minGameID += value;
             maxGameID += value;
         }
-    }
+
+        private void pictureBoxTrend1_Click(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            GamePageForm obj = new GamePageForm(table.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), connection);
+            obj.cart = this.cart;
+            obj.ShowDialog();
+            CartInfo();
+        }
+
+       //private int GetIDByName(string name)
+       //{
+       //    
+       //    GetTableByQuery($"SELECT ID FROM Game WHERE Name = {name}");
+       //    return
+       //        table.Rows[0].Field<int>("ID");
+       //}
+    }  //
 }

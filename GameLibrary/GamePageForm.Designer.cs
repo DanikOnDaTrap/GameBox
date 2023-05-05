@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePageForm));
             this.labelName = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
-            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelSystem = new System.Windows.Forms.Label();
             this.labelDeveloper = new System.Windows.Forms.Label();
             this.labelCategory = new System.Windows.Forms.Label();
@@ -42,7 +44,18 @@
             this.labelPrice = new System.Windows.Forms.Label();
             this.labelAge = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBoxPlatform1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPlatform2 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPlatform3 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.buttonAddReview = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelName
@@ -66,15 +79,6 @@
             this.labelDescription.Size = new System.Drawing.Size(594, 279);
             this.labelDescription.TabIndex = 21;
             this.labelDescription.Text = "DESCRIPTION";
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.Location = new System.Drawing.Point(733, 27);
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(295, 371);
-            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxLogo.TabIndex = 22;
-            this.pictureBoxLogo.TabStop = false;
             // 
             // labelSystem
             // 
@@ -189,12 +193,120 @@
             this.label1.TabIndex = 33;
             this.label1.Text = "Системные требования:";
             // 
+            // pictureBoxPlatform1
+            // 
+            this.pictureBoxPlatform1.Image = global::GameLibrary.Properties.Resources.win;
+            this.pictureBoxPlatform1.Location = new System.Drawing.Point(978, 573);
+            this.pictureBoxPlatform1.Name = "pictureBoxPlatform1";
+            this.pictureBoxPlatform1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBoxPlatform1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPlatform1.TabIndex = 36;
+            this.pictureBoxPlatform1.TabStop = false;
+            this.pictureBoxPlatform1.Visible = false;
+            // 
+            // pictureBoxPlatform2
+            // 
+            this.pictureBoxPlatform2.Image = global::GameLibrary.Properties.Resources.lin;
+            this.pictureBoxPlatform2.Location = new System.Drawing.Point(922, 570);
+            this.pictureBoxPlatform2.Name = "pictureBoxPlatform2";
+            this.pictureBoxPlatform2.Size = new System.Drawing.Size(50, 50);
+            this.pictureBoxPlatform2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPlatform2.TabIndex = 35;
+            this.pictureBoxPlatform2.TabStop = false;
+            this.pictureBoxPlatform2.Visible = false;
+            // 
+            // pictureBoxPlatform3
+            // 
+            this.pictureBoxPlatform3.Image = global::GameLibrary.Properties.Resources.mac;
+            this.pictureBoxPlatform3.Location = new System.Drawing.Point(866, 570);
+            this.pictureBoxPlatform3.Name = "pictureBoxPlatform3";
+            this.pictureBoxPlatform3.Size = new System.Drawing.Size(50, 50);
+            this.pictureBoxPlatform3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPlatform3.TabIndex = 34;
+            this.pictureBoxPlatform3.TabStop = false;
+            this.pictureBoxPlatform3.Visible = false;
+            // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo.Location = new System.Drawing.Point(733, 27);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Size = new System.Drawing.Size(295, 371);
+            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxLogo.TabIndex = 22;
+            this.pictureBoxLogo.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(16, 806);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 28);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Отзывы:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.GridColor = System.Drawing.Color.Gray;
+            this.dataGridView1.Location = new System.Drawing.Point(20, 850);
+            this.dataGridView1.Name = "dataGridView1";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView1.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.Size = new System.Drawing.Size(1008, 240);
+            this.dataGridView1.TabIndex = 38;
+            // 
+            // buttonAddReview
+            // 
+            this.buttonAddReview.BackColor = System.Drawing.Color.Silver;
+            this.buttonAddReview.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddReview.Location = new System.Drawing.Point(20, 1096);
+            this.buttonAddReview.Name = "buttonAddReview";
+            this.buttonAddReview.Size = new System.Drawing.Size(182, 38);
+            this.buttonAddReview.TabIndex = 39;
+            this.buttonAddReview.Text = "Добавить отзыв";
+            this.buttonAddReview.UseVisualStyleBackColor = false;
+            this.buttonAddReview.Click += new System.EventHandler(this.buttonAddReview_Click);
+            // 
             // GamePageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
-            this.ClientSize = new System.Drawing.Size(1055, 815);
+            this.ClientSize = new System.Drawing.Size(1055, 1146);
+            this.Controls.Add(this.buttonAddReview);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.pictureBoxPlatform1);
+            this.Controls.Add(this.pictureBoxPlatform2);
+            this.Controls.Add(this.pictureBoxPlatform3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelAge);
             this.Controls.Add(this.labelPrice);
@@ -214,7 +326,11 @@
             this.Name = "GamePageForm";
             this.Text = "GamePageForm";
             this.Load += new System.EventHandler(this.GamePageForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,5 +350,11 @@
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelAge;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBoxPlatform3;
+        private System.Windows.Forms.PictureBox pictureBoxPlatform2;
+        private System.Windows.Forms.PictureBox pictureBoxPlatform1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button buttonAddReview;
     }
 }

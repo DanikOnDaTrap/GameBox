@@ -19,6 +19,7 @@ namespace GameLibrary
         DataTable tempTable;
         DataTable subTableCategory;
         DataTable subTableDeveloper;
+        DataTable subTableReview;
         int gameID;
         public List<int> cart;
         bool addedToCart = false;
@@ -28,9 +29,11 @@ namespace GameLibrary
             InitializeComponent();
             gameID = productID;
             connection = cn;
+
             GetTableByQuery($"SELECT * FROM GAME WHERE ID = {gameID}"); table = tempTable;
             GetTableByQuery($"SELECT Category.Name FROM Game INNER JOIN Category ON Game.CategoryID = Category.ID WHERE Game.ID = {gameID}"); subTableCategory = tempTable;
             GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
+            GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN Profile ON Profile.ID = Review.ProfileID WHERE GameID = {gameID}"); subTableReview = tempTable;
             LoadData();
         }
 
@@ -42,6 +45,22 @@ namespace GameLibrary
 
             adapter.SelectCommand = cmd;
             adapter.Fill(tempTable);
+        }
+
+        private void CustomDataGrid()
+        {
+            dataGridView1.Font = new Font("Century Gothic", 14F);
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
+            dataGridView1.RowTemplate.MinimumHeight = 50;
+            dataGridView1.Columns[0].Width = 180;
+            dataGridView1.Columns[1].Width = 735;
+            dataGridView1.Columns[2].Width = 90;
+            dataGridView1.Enabled = false;
+            dataGridView1.AllowUserToAddRows = false;
         }
 
         private void LoadData()
@@ -58,9 +77,31 @@ namespace GameLibrary
             labelUserScore.Text = "Оценка игроков: " + table.Rows[0].Field<double>("UserScore").ToString() + " / 10";
             labelPressScore.Text = "Оценка прессы: " + table.Rows[0].Field<double>("PressScore").ToString() + " / 10";
             if (table.Rows[0].Field<Decimal>("Price") == 0)
+            {
                 labelPrice.Text = "Бесплатно";
+            }       
             else
+            {
                 labelPrice.Text = Math.Round(table.Rows[0].Field<Decimal>("Price"), 2).ToString() + " RUB";
+            }
+            if (table.Rows[0].Field<bool>("WindowsAvailable"))
+            {
+                pictureBoxPlatform1.Visible = true;
+            }
+            if (table.Rows[0].Field<bool>("LinuxAvailable"))
+            {
+                pictureBoxPlatform2.Visible = true;
+            }
+            if (table.Rows[0].Field<bool>("MacAvailable"))
+            {
+                if (table.Rows[0].Field<bool>("LinuxAvailable") == false)
+                {
+                    pictureBoxPlatform3.Location = pictureBoxPlatform2.Location;
+                }
+                pictureBoxPlatform3.Visible = true;
+            }
+            dataGridView1.DataSource = subTableReview;
+            CustomDataGrid();
         }
 
         public Image ConvertByteArrayToImage(byte[] data)
@@ -104,6 +145,11 @@ namespace GameLibrary
                 CartAdd();
             else
                 CartRemove();
+        }
+
+        private void buttonAddReview_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

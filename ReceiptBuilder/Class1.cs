@@ -8,5 +8,5 @@ namespace ReceiptBuilder
 {
     public class Class1
     {
-    }
+  }// может сделать отчет билдер о профиле пользователя
 }

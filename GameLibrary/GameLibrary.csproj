@@ -140,5 +140,14 @@
   <ItemGroup>
     <None Include="Properties\Res\strelkaRight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\win.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\lin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\mac.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
