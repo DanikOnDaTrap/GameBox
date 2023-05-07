@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using static System.Net.Mime.MediaTypeNames;
+//using static System.Net.Mime.MediaTypeNames;
 
 namespace GameLibrary
 {
@@ -18,6 +20,7 @@ namespace GameLibrary
         SqlConnection connection;
         DataTable table;
         DataTable FullProductTable;
+        // dt Following
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
         Label[] LabelTrending;
@@ -29,17 +32,19 @@ namespace GameLibrary
         PictureBox[] PlatformThird;
         PictureBox[][] Platforms;
         Panel[] Panels;
+        Panel[] PanelsTrends;
         int currentPage = 0;
         int minGameID = 0;
         int maxGameID = 18;
         public List<int> cart = new List<int>();
+        bool EditingInProgress = false;
 
         public MainWindow(string UserID, SqlConnection sqlCon)
         {
             InitializeComponent();
             this.Username = UserID;
             connection = sqlCon;
-            Panels = new[] { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14, panel15, panel16, panel17, panel18 };
+            Panels = new[] { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14, panel15, panel16, panel17, panel18, panel19, panel23, panel24, panel25, panel26, panel27 };
             gameLabelsName = new[] { label2, label4, label6, label8, label10, label12, label14, label16, label18, label20, label22, label24, label26, label28, label30, label32, label34, label36};
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
             picBoxes = new[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16, pictureBox17, pictureBox18 };
@@ -50,30 +55,55 @@ namespace GameLibrary
             PlatformSecond = new[] { pictureBoxPlat4, pictureBoxPlat5, pictureBoxPlat6 };
             PlatformThird = new[] { pictureBoxPlat7, pictureBoxPlat8, pictureBoxPlat9 };
             Platforms = new[] { PlatformFirst, PlatformSecond, PlatformThird };
+            PanelsTrends = new[] { panel20, panel21, panel22 };
 
             SetRoundedShape(panelControl, 35);
+            SetRoundedShape(panelMyGames, 20);
+            SetRoundedShape(pictureBoxMP, 20);
+            SetRoundedShape(panelMyFollows, 20);
             for (int i = 0; i < Panels.Length; i++)
             {
                 SetRoundedShape(Panels[i], 10);
             }
+            for (int i = 0; i < PanelsTrends.Length; i++)
+            {
+                SetRoundedShape(PanelsTrends[i], 20);
+            }
+            for (int i = 0; i < PBTrending.Length; i++)
+            {
+                SetRoundedShape(PBTrending[i], 15);
+            }
             GetProfile(); 
             CatalogLoad();
+            SetEllipsis();
             GetFullTable();
             CartInfo();
             GetTrends();
+            SetMyProflePage();
         }
 
         private void GetProfile()
         {
             GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
             labelUserName.Text = table.Rows[0].Field<string>("Username");
-            //pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
+            pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
             labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
         }
 
         private void CartInfo()
         {
             labelCart.Text = $"Количество товаров: {cart.Count} \nНа сумму {Math.Round(GetCartSum(), 2).ToString()} рублей";
+        }
+
+        private void SetEllipsis()
+        {
+            for (int i = 0; i < gameLabelsName.Length; i++)
+            {
+                gameLabelsName[i].AutoSize = false;
+                gameLabelsName[i].Size = new Size(203, 21);
+                gameLabelsName[i].TextAlign = ContentAlignment.MiddleLeft;
+                gameLabelsName[i].AutoEllipsis = true;
+            }
         }
 
         private decimal GetCartSum()
@@ -198,6 +228,7 @@ namespace GameLibrary
             {
                 try
                 {
+                    Panels[i].Visible = true;
                     picBoxes[i].Image = ConvertByteArrayToImage(table.Rows[i].Field<byte[]>("Image"));
                     gameLabelsName[i].Text = table.Rows[i].Field<string>("Name");
                     if (table.Rows[i].Field<Decimal>("Price") == 0)
@@ -219,6 +250,7 @@ namespace GameLibrary
                 picBoxes[i].Image = null;
                 gameLabelsName[i].Text = "";
                 gameLabelsPrice[i].Text = "";
+                Panels[i].Visible = false;
             }
         }
 
@@ -287,13 +319,18 @@ namespace GameLibrary
             CartInfo();
         }
 
-        //private int GetIDByName(string name)
-        //{
-        //    
-        //    GetTableByQuery($"SELECT ID FROM Game WHERE Name = {name}");
-        //    return
-        //        table.Rows[0].Field<int>("ID");
-        //}
+        private void pictureBoxTrend1_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width + 5, selectedPB.Height + 5);
+        }
+
+        private void pictureBoxTrend1_MouseLeave(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width - 5, selectedPB.Height - 5);
+        }
+
         static void SetRoundedShape(Control control, int radius)
         {
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
@@ -307,6 +344,86 @@ namespace GameLibrary
             path.AddArc(0, 0, radius, radius, 180, 90);
             control.Region = new Region(path);
         }
-    } 
-    
+
+        private void SetMyProflePage()
+        {
+            labelNameMP.Text = Username;
+            GetTableByQuery($"SELECT [Name] AS Игра ,[Text] AS Комментарий, Score AS Оценка, [Date] AS Дата FROM Review INNER JOIN Game ON GameID = Game.ID WHERE UserID = '{Username}'");
+            dataGridView1.DataSource = table;
+            GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
+            textBoxAboutMe.Text = table.Rows[0].Field<string>("AboutMe");
+            textBoxActualName.Text = table.Rows[0].Field<string>("Name");
+            try
+            {
+                pictureBoxMP.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при загрузке аватара", "Внимание!");
+            }
+            CustomDataGrid();        
+        }
+        private void CustomDataGrid()
+        {
+            dataGridView1.Font = new Font("Century Gothic", 12F);
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
+            dataGridView1.RowTemplate.MinimumHeight = 50;
+            dataGridView1.Columns[0].Width = 200;
+            dataGridView1.Columns[1].Width = 420;
+            dataGridView1.Columns[2].Width = 80;
+            dataGridView1.Columns[3].Width = 90;
+            dataGridView1.Enabled = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Silver;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+        private void pictureBoxMP_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog() { Filter = "Image Files (*.png *.jpg *.jpeg) |*.png; *.jpg; *.jpeg", Multiselect = false })
+            {
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBoxMP.Image = System.Drawing.Image.FromFile(ofd.FileName); //
+                    using (SqlCommand cmd = new SqlCommand("Update [User] Set Photo = @image Where Username = @currentID", connection))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue("@image", ConvertImageToBytes(pictureBoxMP.Image));
+                        cmd.Parameters.AddWithValue("@currentID", Username);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        private void buttonAbotMe_Click(object sender, EventArgs e)
+        {
+            if (!EditingInProgress)
+            {
+                EditingInProgress = true;
+                textBoxAboutMe.ReadOnly = false;
+                textBoxActualName.ReadOnly = false;
+                buttonAbotMe.Text = "Завершить редактирование";
+            }
+            else
+            {
+                using (SqlCommand cmd = new SqlCommand("Update [User] Set Name = @name, AboutMe = @about Where Username = @currentID", connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@name", textBoxActualName.Text);
+                    cmd.Parameters.AddWithValue("@about", textBoxAboutMe.Text);
+                    cmd.Parameters.AddWithValue("@currentID", Username);
+                    cmd.ExecuteNonQuery();
+                }
+                EditingInProgress = false;
+                textBoxAboutMe.ReadOnly = true;
+                textBoxActualName.ReadOnly = true;
+                buttonAbotMe.Text = "Редактировать данные профиля";
+            }            
+        }
+    }    
 }

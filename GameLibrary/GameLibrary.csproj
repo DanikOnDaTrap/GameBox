@@ -161,5 +161,8 @@
   <ItemGroup>
     <None Include="Properties\Res\boxmainlogo CUT.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\placeholderMP.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

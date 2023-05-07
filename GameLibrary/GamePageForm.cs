@@ -35,6 +35,7 @@ namespace GameLibrary
             GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
             GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN [User] ON [User].Username = Review.UserID WHERE GameID = {gameID}"); subTableReview = tempTable;
             LoadData();
+            SetDesign();
         }
 
         private void GetTableByQuery(string sqlQ)
@@ -46,18 +47,29 @@ namespace GameLibrary
             adapter.SelectCommand = cmd;
             adapter.Fill(tempTable);
         }
+        
+        private void SetDesign()
+        {
+            SetRoundedShape(labelDescription, 15);
+            SetRoundedShape(labelSystem, 15);
+            SetRoundedShape(labelPressScore, 15);
+            SetRoundedShape(labelUserScore, 15);
+            SetRoundedShape(labelDeveloper, 15);
+            SetRoundedShape(labelCategory, 15);
+            SetRoundedShape(pictureBoxLogo, 15);
+        }
 
         private void CustomDataGrid()
         {
-            dataGridView1.Font = new Font("Century Gothic", 14F);
+            dataGridView1.Font = new Font("Century Gothic", 12F);
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
             dataGridView1.RowTemplate.MinimumHeight = 50;
-            dataGridView1.Columns[0].Width = 180;
-            dataGridView1.Columns[1].Width = 735;
+            dataGridView1.Columns[0].Width = 170;
+            dataGridView1.Columns[1].Width = 655;
             dataGridView1.Columns[2].Width = 90;
             dataGridView1.Enabled = false;
             dataGridView1.AllowUserToAddRows = false;
@@ -152,6 +164,19 @@ namespace GameLibrary
         private void buttonAddReview_Click(object sender, EventArgs e)
         {
             
+        }
+        static void SetRoundedShape(Control control, int radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddLine(radius, 0, control.Width - radius, 0);
+            path.AddArc(control.Width - radius, 0, radius, radius, 270, 90);
+            path.AddLine(control.Width, radius, control.Width, control.Height - radius);
+            path.AddArc(control.Width - radius, control.Height - radius, radius, radius, 0, 90);
+            path.AddLine(control.Width - radius, control.Height, radius, control.Height);
+            path.AddArc(0, control.Height - radius, radius, radius, 90, 90);
+            path.AddLine(0, control.Height - radius, 0, radius);
+            path.AddArc(0, 0, radius, radius, 180, 90);
+            control.Region = new Region(path);
         }
     }
 }

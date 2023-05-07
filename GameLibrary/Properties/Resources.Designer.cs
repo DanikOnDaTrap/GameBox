@@ -123,6 +123,16 @@ namespace GameLibrary.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap placeholderMP {
+            get {
+                object obj = ResourceManager.GetObject("placeholderMP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap strelkaLeft {
             get {
                 object obj = ResourceManager.GetObject("strelkaLeft", resourceCulture);
