@@ -2,13 +2,14 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 
 namespace GameLibrary
 {
     public partial class AuthorizationForm : Form
     {
-        SqlConnection cn;
+        public SqlConnection cn;
         DataTable table;
         private string textCaptcha = String.Empty;
         bool captchaRequired = false;
@@ -18,6 +19,7 @@ namespace GameLibrary
         {
             InitializeComponent();
             textBoxPassword.UseSystemPasswordChar = true;
+            ConnectionBuild();
         }
 
         private void ConnectionBuild()
@@ -46,9 +48,8 @@ namespace GameLibrary
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            ConnectionBuild();
-
-            string querySQL = $"SELECT ID FROM [USER] WHERE Login = '{"shev"}' AND Password = '{"shev"}'";  // Авторизация
+            // username
+            string querySQL = $"SELECT Username FROM [USER] WHERE Login = '{"shev"}' AND Password = '{"shev"}'";  // Авторизация
 
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(querySQL, cn);
@@ -96,7 +97,12 @@ namespace GameLibrary
 
         private void MWOpen()
         {
-            MainWindow obj = new MainWindow(table.Rows[0].Field<int>("ID"), cn);
+            MainWindow obj = new MainWindow(table.Rows[0].Field<string>("Username"), cn);
+            obj.ShowDialog();
+        }
+        private void labelRegistration_Click(object sender, EventArgs e)
+        {
+            RegistrationForm obj = new RegistrationForm(this.cn);
             obj.ShowDialog();
         }
 
@@ -151,6 +157,16 @@ namespace GameLibrary
             {
                 secblocked++;
             }
+        }
+
+        private void labelRegistration_MouseEnter(object sender, EventArgs e)
+        {
+            labelRegistration.Font = new Font(labelRegistration.Font, FontStyle.Underline);
+        }
+
+        private void labelRegistration_MouseLeave(object sender, EventArgs e)
+        {
+            labelRegistration.Font = new Font(labelRegistration.Font, FontStyle.Regular);
         }
     }
 }

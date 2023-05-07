@@ -33,7 +33,7 @@ namespace GameLibrary
             GetTableByQuery($"SELECT * FROM GAME WHERE ID = {gameID}"); table = tempTable;
             GetTableByQuery($"SELECT Category.Name FROM Game INNER JOIN Category ON Game.CategoryID = Category.ID WHERE Game.ID = {gameID}"); subTableCategory = tempTable;
             GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
-            GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN Profile ON Profile.ID = Review.ProfileID WHERE GameID = {gameID}"); subTableReview = tempTable;
+            GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN [User] ON [User].Username = Review.UserID WHERE GameID = {gameID}"); subTableReview = tempTable;
             LoadData();
         }
 
@@ -61,6 +61,8 @@ namespace GameLibrary
             dataGridView1.Columns[2].Width = 90;
             dataGridView1.Enabled = false;
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Silver;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
         private void LoadData()
@@ -149,7 +151,7 @@ namespace GameLibrary
 
         private void buttonAddReview_Click(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

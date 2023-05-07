@@ -14,7 +14,7 @@ namespace GameLibrary
 {
     public partial class MainWindow : Form
     {
-        int UserID;
+        string Username;
         SqlConnection connection;
         DataTable table;
         DataTable FullProductTable;
@@ -27,17 +27,19 @@ namespace GameLibrary
         PictureBox[] PlatformFirst;
         PictureBox[] PlatformSecond;
         PictureBox[] PlatformThird;
-        PictureBox[][] Platforms; 
+        PictureBox[][] Platforms;
+        Panel[] Panels;
         int currentPage = 0;
         int minGameID = 0;
         int maxGameID = 18;
         public List<int> cart = new List<int>();
 
-        public MainWindow(int UserID, SqlConnection sqlCon)
+        public MainWindow(string UserID, SqlConnection sqlCon)
         {
             InitializeComponent();
-            this.UserID = UserID;
+            this.Username = UserID;
             connection = sqlCon;
+            Panels = new[] { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14, panel15, panel16, panel17, panel18 };
             gameLabelsName = new[] { label2, label4, label6, label8, label10, label12, label14, label16, label18, label20, label22, label24, label26, label28, label30, label32, label34, label36};
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
             picBoxes = new[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11, pictureBox12, pictureBox13, pictureBox14, pictureBox15, pictureBox16, pictureBox17, pictureBox18 };
@@ -48,6 +50,12 @@ namespace GameLibrary
             PlatformSecond = new[] { pictureBoxPlat4, pictureBoxPlat5, pictureBoxPlat6 };
             PlatformThird = new[] { pictureBoxPlat7, pictureBoxPlat8, pictureBoxPlat9 };
             Platforms = new[] { PlatformFirst, PlatformSecond, PlatformThird };
+
+            SetRoundedShape(panelControl, 35);
+            for (int i = 0; i < Panels.Length; i++)
+            {
+                SetRoundedShape(Panels[i], 10);
+            }
             GetProfile(); 
             CatalogLoad();
             GetFullTable();
@@ -57,9 +65,9 @@ namespace GameLibrary
 
         private void GetProfile()
         {
-            GetTableByQuery($"SELECT * FROM [User] INNER JOIN [Profile] ON ProfileID = [Profile].ID WHERE [User].ID = {UserID}");
+            GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
             labelUserName.Text = table.Rows[0].Field<string>("Username");
-            pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
+            //pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
             labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
         }
 
@@ -135,9 +143,9 @@ namespace GameLibrary
             }
             //Insert(ConvertImageToBytes(pictureBox1.Image), Int32.Parse(textBox1.Text));
         }
-        public void Insert(byte[] image, int currentID)
+        public void Insert(byte[] image, string currentID)
         {
-            using (SqlCommand cmd = new SqlCommand("Update Game Set Image = @image Where ID = @currentID", connection))
+            using (SqlCommand cmd = new SqlCommand("Update [User] Set Photo = @image Where Username = @currentID", connection))
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@image", image);
@@ -279,12 +287,26 @@ namespace GameLibrary
             CartInfo();
         }
 
-       //private int GetIDByName(string name)
-       //{
-       //    
-       //    GetTableByQuery($"SELECT ID FROM Game WHERE Name = {name}");
-       //    return
-       //        table.Rows[0].Field<int>("ID");
-       //}
-    }  //
+        //private int GetIDByName(string name)
+        //{
+        //    
+        //    GetTableByQuery($"SELECT ID FROM Game WHERE Name = {name}");
+        //    return
+        //        table.Rows[0].Field<int>("ID");
+        //}
+        static void SetRoundedShape(Control control, int radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddLine(radius, 0, control.Width - radius, 0);
+            path.AddArc(control.Width - radius, 0, radius, radius, 270, 90);
+            path.AddLine(control.Width, radius, control.Width, control.Height - radius);
+            path.AddArc(control.Width - radius, control.Height - radius, radius, radius, 0, 90);
+            path.AddLine(control.Width - radius, control.Height, radius, control.Height);
+            path.AddArc(0, control.Height - radius, radius, radius, 90, 90);
+            path.AddLine(0, control.Height - radius, 0, radius);
+            path.AddArc(0, 0, radius, radius, 180, 90);
+            control.Region = new Region(path);
+        }
+    } 
+    
 }

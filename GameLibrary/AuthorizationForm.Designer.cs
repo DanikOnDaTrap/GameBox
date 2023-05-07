@@ -31,9 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthorizationForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelRegistration = new System.Windows.Forms.Label();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.panelCaptcha = new System.Windows.Forms.Panel();
             this.textBoxCaptcha = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxShow = new System.Windows.Forms.PictureBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,18 +44,17 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxShow = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panelCaptcha.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(99)))), ((int)(((byte)(91)))));
+            this.panel1.Controls.Add(this.labelRegistration);
             this.panel1.Controls.Add(this.buttonConnect);
             this.panel1.Controls.Add(this.panelCaptcha);
             this.panel1.Controls.Add(this.pictureBoxShow);
@@ -63,11 +65,26 @@
             this.panel1.Font = new System.Drawing.Font("Magneto", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.Location = new System.Drawing.Point(0, 352);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(401, 400);
+            this.panel1.Size = new System.Drawing.Size(401, 433);
             this.panel1.TabIndex = 0;
+            // 
+            // labelRegistration
+            // 
+            this.labelRegistration.AutoSize = true;
+            this.labelRegistration.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelRegistration.Location = new System.Drawing.Point(109, 390);
+            this.labelRegistration.Name = "labelRegistration";
+            this.labelRegistration.Size = new System.Drawing.Size(190, 20);
+            this.labelRegistration.TabIndex = 7;
+            this.labelRegistration.Text = "Завести учетную запись";
+            this.labelRegistration.Click += new System.EventHandler(this.labelRegistration_Click);
+            this.labelRegistration.MouseEnter += new System.EventHandler(this.labelRegistration_MouseEnter);
+            this.labelRegistration.MouseLeave += new System.EventHandler(this.labelRegistration_MouseLeave);
             // 
             // buttonConnect
             // 
+            this.buttonConnect.FlatAppearance.BorderColor = System.Drawing.Color.BlueViolet;
+            this.buttonConnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.buttonConnect.Font = new System.Drawing.Font("Century Gothic", 14.25F);
             this.buttonConnect.ForeColor = System.Drawing.Color.Black;
             this.buttonConnect.Location = new System.Drawing.Point(135, 347);
@@ -95,6 +112,26 @@
             this.textBoxCaptcha.Name = "textBoxCaptcha";
             this.textBoxCaptcha.Size = new System.Drawing.Size(163, 31);
             this.textBoxCaptcha.TabIndex = 6;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(38, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(169, 84);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBoxShow
+            // 
+            this.pictureBoxShow.Image = global::GameLibrary.Properties.Resources.eye;
+            this.pictureBoxShow.Location = new System.Drawing.Point(351, 138);
+            this.pictureBoxShow.Name = "pictureBoxShow";
+            this.pictureBoxShow.Size = new System.Drawing.Size(33, 31);
+            this.pictureBoxShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxShow.TabIndex = 4;
+            this.pictureBoxShow.TabStop = false;
+            this.pictureBoxShow.Click += new System.EventHandler(this.pictureBoxShow_Click);
             // 
             // textBoxPassword
             // 
@@ -146,32 +183,12 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(38, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(169, 84);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBoxShow
-            // 
-            this.pictureBoxShow.Image = global::GameLibrary.Properties.Resources.eye;
-            this.pictureBoxShow.Location = new System.Drawing.Point(351, 138);
-            this.pictureBoxShow.Name = "pictureBoxShow";
-            this.pictureBoxShow.Size = new System.Drawing.Size(33, 31);
-            this.pictureBoxShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxShow.TabIndex = 4;
-            this.pictureBoxShow.TabStop = false;
-            this.pictureBoxShow.Click += new System.EventHandler(this.pictureBoxShow_Click);
-            // 
             // AuthorizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
-            this.ClientSize = new System.Drawing.Size(396, 763);
+            this.ClientSize = new System.Drawing.Size(396, 797);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.White;
@@ -184,9 +201,9 @@
             this.panel1.PerformLayout();
             this.panelCaptcha.ResumeLayout(false);
             this.panelCaptcha.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -206,6 +223,7 @@
         private System.Windows.Forms.TextBox textBoxCaptcha;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelRegistration;
     }
 }
 
