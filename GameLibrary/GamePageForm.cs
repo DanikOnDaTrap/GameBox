@@ -20,20 +20,23 @@ namespace GameLibrary
         DataTable subTableCategory;
         DataTable subTableDeveloper;
         DataTable subTableReview;
+        DataTable subTableCollection;
         int gameID;
-        public List<int> cart;
-        bool addedToCart = false;
+        string Username;
+        bool inCollection = false;
 
-        public GamePageForm(int productID, SqlConnection cn)
+        public GamePageForm(int productID, string uname, SqlConnection cn)
         {
             InitializeComponent();
             gameID = productID;
             connection = cn;
+            Username = uname;
 
             GetTableByQuery($"SELECT * FROM GAME WHERE ID = {gameID}"); table = tempTable;
             GetTableByQuery($"SELECT Category.Name FROM Game INNER JOIN Category ON Game.CategoryID = Category.ID WHERE Game.ID = {gameID}"); subTableCategory = tempTable;
             GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
             GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN [User] ON [User].Username = Review.UserID WHERE GameID = {gameID}"); subTableReview = tempTable;
+            GetTableByQuery($"SELECT * FROM Purchase WHERE UserID = '{uname}'"); subTableCollection = tempTable;
             LoadData();
             SetDesign();
         }
@@ -47,7 +50,7 @@ namespace GameLibrary
             adapter.SelectCommand = cmd;
             adapter.Fill(tempTable);
         }
-        
+
         private void SetDesign()
         {
             SetRoundedShape(labelDescription, 15);
@@ -129,42 +132,53 @@ namespace GameLibrary
 
         private void buttonAddToCart_Click(object sender, EventArgs e)
         {
-            if (addedToCart == false)
+            if (inCollection == false)
             {
-                cart.Add(this.gameID);
                 CartAdd();
             }
             else
             {
-                cart.Remove(this.gameID);
                 CartRemove();
             }
         }
 
         public void CartAdd()
         {
-            buttonAddToCart.Text = "В корзине!";
-            addedToCart = true;
+            GetTableByQuery("SELECT * FROM Purchase");
+            using (SqlCommand cmd = new SqlCommand($"INSERT Purchase VALUES ('{Username}', '{gameID}','{DateTime.Now}')", connection))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            buttonAddToCart.Text = "В коллекции!";
+            inCollection = true;
         }
 
         public void CartRemove()
         {
-            buttonAddToCart.Text = "Добавить в корзину";
-            addedToCart = false;
+            using (SqlCommand cmd = new SqlCommand($"DELETE FROM Purchase WHERE UserID = '{Username}' AND GameID = {gameID}", connection))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            buttonAddToCart.Text = "Добавить в коллекцию";
+            inCollection = false;
+            
         }
 
         private void GamePageForm_Load(object sender, EventArgs e)
         {
-            if (cart.Contains(this.gameID))
-                CartAdd();
+            for (int i = 0; i < subTableCollection.Rows.Count; i++)
+            {
+                if (subTableCollection.Rows[i].Field<int>("GameID") == gameID)
+                    inCollection = true;
+            }
+            if (inCollection)
+                buttonAddToCart.Text = "В коллекции!";
             else
-                CartRemove();
+                buttonAddToCart.Text = "Добавить в коллекцию";
         }
 
-        private void buttonAddReview_Click(object sender, EventArgs e)
-        {
-            
-        }
         static void SetRoundedShape(Control control, int radius)
         {
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GameLibrary
 {
@@ -27,7 +26,7 @@ namespace GameLibrary
         {
             try
             {
-                using (SqlCommand cmd = new SqlCommand($"INSERT [User] VALUES ('{textBoxUsername.Text}', '{textBoxLogin.Text}', '{textBoxPassword.Text}', 0,0,NULL,NULL,NULL,NULL) ", connection))
+                using (SqlCommand cmd = new SqlCommand($"INSERT [User] VALUES ('{textBoxUsername.Text}', '{textBoxLogin.Text}', '{textBoxPassword.Text}', 0,0,NULL,NULL,NULL) ", connection))
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();

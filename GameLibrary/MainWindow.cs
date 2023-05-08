@@ -9,34 +9,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using static System.Net.Mime.MediaTypeNames;
-//using static System.Net.Mime.MediaTypeNames;
 
 namespace GameLibrary
 {
     public partial class MainWindow : Form
     {
         string Username;
+        int MGincrementation = 0;
+        int FollowingIncrementation = 0;
         SqlConnection connection;
         DataTable table;
         DataTable FullProductTable;
-        // dt Following
+        DataTable TrendingTable;
         Label[] gameLabelsName;
         Label[] gameLabelsPrice;
         Label[] LabelTrending;
         Label[] LabelTrendingDesc;
+        Label[] labelsMyGames;
+        Label[] labelsFollowing;
         PictureBox[] picBoxes;
+        PictureBox[] picBoxesMyGames;
         PictureBox[] PBTrending;
+        PictureBox[] PBFollows;
         PictureBox[] PlatformFirst;
         PictureBox[] PlatformSecond;
         PictureBox[] PlatformThird;
         PictureBox[][] Platforms;
         Panel[] Panels;
         Panel[] PanelsTrends;
+        Panel[] panelsMyGames;
+        Panel[] PanelsFollow;
         int currentPage = 0;
+        int currentPageMG = 0;
+        int currentPageFollowing = 0;
         int minGameID = 0;
         int maxGameID = 18;
-        public List<int> cart = new List<int>();
         bool EditingInProgress = false;
 
         public MainWindow(string UserID, SqlConnection sqlCon)
@@ -56,7 +63,38 @@ namespace GameLibrary
             PlatformThird = new[] { pictureBoxPlat7, pictureBoxPlat8, pictureBoxPlat9 };
             Platforms = new[] { PlatformFirst, PlatformSecond, PlatformThird };
             PanelsTrends = new[] { panel20, panel21, panel22 };
+            labelsMyGames = new[] { labelMP1, labelMP2, labelMP3, labelMP4, labelMP5, labelMP6 };
+            picBoxesMyGames = new[] { pictureBoxMP1, pictureBoxMP2, pictureBoxMP3, pictureBoxMP4, pictureBoxMP5, pictureBoxMP6 };
+            panelsMyGames = new[] { panel19, panel23, panel24, panel25, panel26, panel27 };
+            PBFollows = new[] { pictureBoxFollows1, pictureBoxFollows2, pictureBoxFollows3, pictureBoxFollows4, pictureBoxFollows5, pictureBoxFollows6 };
+            PanelsFollow = new[] { panelF1, panelF2, panelF3, panelF4, panelF5, panelF6 };
+            labelsFollowing = new[] { label40, label41, label42, label43, label44, label45 };
 
+            pictureBoxPrevMG.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pictureBoxNextMG.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+            GetProfile();
+            SetMyGames();
+            SetFollows();
+            CatalogLoad();
+            SetEllipsis();
+            GetFullTable();
+            //CartInfo();
+            GetTrends();
+            SetMyProflePage();
+            RoundElements();
+        }
+
+        private void GetProfile()
+        {
+            GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
+            labelUserName.Text = table.Rows[0].Field<string>("Username");
+            pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
+            labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
+        }
+
+        private void RoundElements()
+        {
             SetRoundedShape(panelControl, 35);
             SetRoundedShape(panelMyGames, 20);
             SetRoundedShape(pictureBoxMP, 20);
@@ -73,26 +111,13 @@ namespace GameLibrary
             {
                 SetRoundedShape(PBTrending[i], 15);
             }
-            GetProfile(); 
-            CatalogLoad();
-            SetEllipsis();
-            GetFullTable();
-            CartInfo();
-            GetTrends();
-            SetMyProflePage();
-        }
-
-        private void GetProfile()
-        {
-            GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
-            labelUserName.Text = table.Rows[0].Field<string>("Username");
-            pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
-            labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
-        }
-
-        private void CartInfo()
-        {
-            labelCart.Text = $"Количество товаров: {cart.Count} \nНа сумму {Math.Round(GetCartSum(), 2).ToString()} рублей";
+            SetRoundedShape(panel28, 15);
+            SetRoundedShape(panel35, 15);
+            for (int i = 0; i < 6; i++)
+            {
+                SetRoundedShape(PanelsFollow[i], 15);
+                SetRoundedShape(PBFollows[i], 15);
+            }
         }
 
         private void SetEllipsis()
@@ -106,16 +131,6 @@ namespace GameLibrary
             }
         }
 
-        private decimal GetCartSum()
-        {
-            decimal sum = 0;
-            for (int i = 0; i < cart.Count; i++)
-            {
-                sum += FullProductTable.Rows[cart[i]].Field<decimal>("Price");
-            }
-            return sum;
-        }
-
         private void GetFullTable()
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -125,27 +140,36 @@ namespace GameLibrary
             adapter.SelectCommand = cmd;
             adapter.Fill(FullProductTable);
         }
+        
+        private void GetTrendingTable()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Game ORDER BY UserScore DESC", connection);
+            TrendingTable = new DataTable();
+
+            adapter.SelectCommand = cmd;
+            adapter.Fill(TrendingTable);
+        }
 
         private void GetTrends()
         {
-            string querySQL = $"SELECT * FROM Game ORDER BY UserScore DESC";
-            GetTableByQuery(querySQL);
+            GetTrendingTable();
             for (int i = 0; i < PBTrending.Length; i++)
             {
-                PBTrending[i].Image = ConvertByteArrayToImage(table.Rows[i].Field<byte[]>("Image"));
-                LabelTrending[i].Text = table.Rows[i].Field<string>("Name");
-                LabelTrendingDesc[i].Text = table.Rows[i].Field<string>("Description");
-                if (table.Rows[i].Field<bool>("WindowsAvailable"))
+                PBTrending[i].Image = ConvertByteArrayToImage(TrendingTable.Rows[i].Field<byte[]>("Image"));
+                LabelTrending[i].Text = TrendingTable.Rows[i].Field<string>("Name");
+                LabelTrendingDesc[i].Text = TrendingTable.Rows[i].Field<string>("Description");
+                if (TrendingTable.Rows[i].Field<bool>("WindowsAvailable"))
                 {
                     Platforms[i][0].Visible = true;
                 }
-                if (table.Rows[i].Field<bool>("LinuxAvailable"))
+                if (TrendingTable.Rows[i].Field<bool>("LinuxAvailable"))
                 {
                     Platforms[i][1].Visible = true;
                 }
-                if (table.Rows[i].Field<bool>("MacAvailable"))
+                if (TrendingTable.Rows[i].Field<bool>("MacAvailable"))
                 {
-                    if (table.Rows[i].Field<bool>("LinuxAvailable") == false)
+                    if (TrendingTable.Rows[i].Field<bool>("LinuxAvailable") == false)
                     {
                         Platforms[i][2].Location = Platforms[i][1].Location;
                     }
@@ -247,10 +271,23 @@ namespace GameLibrary
         {
             for (int i = 0; i < 18; i++)
             {
-                picBoxes[i].Image = null;
-                gameLabelsName[i].Text = "";
-                gameLabelsPrice[i].Text = "";
                 Panels[i].Visible = false;
+            }
+        }
+
+        private void MyGamesClear()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                panelsMyGames[i].Visible = false;
+            }
+        }
+
+        private void MyFollowingClear()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                PanelsFollow[i].Visible = false;
             }
         }
 
@@ -266,14 +303,14 @@ namespace GameLibrary
             PictureBox selectedPB = sender as PictureBox;
             selectedPB.Location = new Point(selectedPB.Location.X + 2, selectedPB.Location.Y + 2);
             selectedPB.Size = new Size(selectedPB.Width - 5, selectedPB.Height - 5);
+            SetMyGames();
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18),connection);
-            obj.cart = this.cart;
+            GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18), Username,connection);
             obj.ShowDialog();
-            CartInfo();
+            SetMyGames();
         }
 
         private void pictureBoxRight_Click(object sender, EventArgs e)
@@ -313,10 +350,9 @@ namespace GameLibrary
         private void pictureBoxTrend1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            GamePageForm obj = new GamePageForm(table.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), connection);
-            obj.cart = this.cart;
+            GamePageForm obj = new GamePageForm(TrendingTable.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), Username, connection);
             obj.ShowDialog();
-            CartInfo();
+            SetMyGames();
         }
 
         private void pictureBoxTrend1_MouseEnter(object sender, EventArgs e)
@@ -424,6 +460,147 @@ namespace GameLibrary
                 textBoxActualName.ReadOnly = true;
                 buttonAbotMe.Text = "Редактировать данные профиля";
             }            
+        }
+
+        private bool SetMyGames()
+        {
+            MyGamesClear();
+
+
+            GetTableByQuery($"SELECT * FROM Purchase INNER JOIN Game ON GameID = Game.ID WHERE UserID = '{Username}'");
+            for (int i = 0; i < 6; i++)
+            {
+                
+                try
+                {
+                    picBoxesMyGames[i].Image = ConvertByteArrayToImage(table.Rows[i + MGincrementation].Field<byte[]>("Image"));
+                    labelsMyGames[i].Text = table.Rows[i + MGincrementation].Field<string>("Name");
+                    panelsMyGames[i].Visible = true;
+
+                }
+                catch
+                {
+                    return 
+                        false;
+                }
+            }
+            return
+                true;
+        }
+
+        private void pictureBoxNextMG_Click(object sender, EventArgs e)
+        {
+            if (panel25.Visible == true)
+            {
+                MGincrementation += 6;
+                currentPageMG += 1;
+                labelMGCount.Text = (currentPageMG + 1).ToString();
+                SetMyGames();
+            }
+        }
+
+        private void pictureBoxPrevMG_Click(object sender, EventArgs e)
+        {
+            if (currentPageMG != 0)
+            {
+                MGincrementation -= 6;
+                currentPageMG -= 1;
+                labelMGCount.Text = (currentPageMG + 1).ToString();
+                SetMyGames();
+            }
+        }
+
+        private bool SetFollows()
+        {
+            MyFollowingClear();
+
+            GetTableByQuery($"SELECT HostID, Photo FROM Following INNER JOIN [User] ON Username = HostID WHERE FollowerID = '{Username}'");
+            for (int i = 0; i < 6; i++)
+            {
+                try
+                {
+                    PBFollows[i].Image = ConvertByteArrayToImage(table.Rows[i + FollowingIncrementation].Field<byte[]>("Photo"));
+                    labelsFollowing[i].Text = table.Rows[i + FollowingIncrementation].Field<string>("HostID");
+                    PanelsFollow[i].Visible = true;
+                }
+                catch
+                {
+                    return
+                        false;
+                }
+            }
+            return
+                true;
+        }
+
+        private void pictureBoxFollowingPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageFollowing != 0)
+            {
+                FollowingIncrementation -= 6;
+                currentPageFollowing -= 1;
+                labelMyFollowsCount.Text = (currentPageFollowing + 1).ToString();
+                SetFollows();
+            }
+        }
+
+        private void pictureBoxFollowingNext_Click(object sender, EventArgs e)
+        {
+            if (panelF6.Visible == true)
+            {
+                FollowingIncrementation += 6;
+                currentPageFollowing += 1;
+                labelMyFollowsCount.Text = (currentPageFollowing + 1).ToString();
+                SetFollows();
+            }
+        }
+
+        private void pictureBoxFollows1_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width - 1, selectedPB.Height - 1);
+        }
+
+        private void pictureBoxFollows1_MouseLeave(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width + 1, selectedPB.Height + 1);
+        }
+
+        private void pictureBoxFollows1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBoxMP_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBoxMP.Size = new Size(pictureBoxMP.Width - 1, pictureBoxMP.Height - 1);
+        }
+
+        private void pictureBoxMP_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBoxMP.Size = new Size(pictureBoxMP.Width + 1, pictureBoxMP.Height + 1);
+        }
+
+        private void pictureBoxMP1_Click(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            GetTableByQuery($"SELECT * FROM Game WHERE Name = '{labelsMyGames[Convert.ToInt32(selectedPB.Name.Substring(12)) - 1].Text}'");            
+            GamePageForm obj = new GamePageForm(table.Rows[0].Field<int>("ID"), Username, connection);
+            obj.ShowDialog();
+            SetMyGames();
+        }
+
+        private void pictureBoxMP1_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width - 1, selectedPB.Height - 1);
+        }
+
+        private void pictureBoxMP1_MouseLeave(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width + 1, selectedPB.Height + 1);
         }
     }    
 }

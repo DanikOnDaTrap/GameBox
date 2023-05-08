@@ -296,7 +296,6 @@
             this.buttonAddReview.TabIndex = 39;
             this.buttonAddReview.Text = "Добавить отзыв";
             this.buttonAddReview.UseVisualStyleBackColor = false;
-            this.buttonAddReview.Click += new System.EventHandler(this.buttonAddReview_Click);
             // 
             // GamePageForm
             // 

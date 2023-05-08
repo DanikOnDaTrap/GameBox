@@ -48,8 +48,8 @@ namespace GameLibrary
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            // username
-            string querySQL = $"SELECT Username FROM [USER] WHERE Login = '{"shev"}' AND Password = '{"shev"}'";  // Авторизация
+            // username"shev"
+            string querySQL = $"SELECT Username FROM [USER] WHERE Login = '{"DanikOnDaTrap"}' AND Password = '{"shev"}'";  // Авторизация
 
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(querySQL, cn);
