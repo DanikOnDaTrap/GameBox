@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameLibrary
@@ -15,6 +10,7 @@ namespace GameLibrary
     public partial class MainWindow : Form
     {
         string Username;
+        int accessLevel = 0;
         int MGincrementation = 0;
         int FollowingIncrementation = 0;
         SqlConnection connection;
@@ -46,11 +42,12 @@ namespace GameLibrary
         int maxGameID = 18;
         bool EditingInProgress = false;
 
-        public MainWindow(string UserID, SqlConnection sqlCon)
+        public MainWindow(string UserID, int Role, SqlConnection sqlCon)
         {
             InitializeComponent();
             this.Username = UserID;
             connection = sqlCon;
+            accessLevel = Role;
             Panels = new[] { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14, panel15, panel16, panel17, panel18, panel19, panel23, panel24, panel25, panel26, panel27 };
             gameLabelsName = new[] { label2, label4, label6, label8, label10, label12, label14, label16, label18, label20, label22, label24, label26, label28, label30, label32, label34, label36};
             gameLabelsPrice = new[] { label1, label3, label5, label7, label9, label11, label13, label15, label17, label19, label21, label23, label25, label27, label29, label31, label33, label35,};
@@ -79,10 +76,12 @@ namespace GameLibrary
             CatalogLoad();
             SetEllipsis();
             GetFullTable();
-            //CartInfo();
             GetTrends();
             SetMyProflePage();
             RoundElements();
+
+            if (accessLevel == 1)
+                buttonAddGame.Visible = true;
         }
 
         private void GetProfile()
@@ -90,15 +89,17 @@ namespace GameLibrary
             GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{Username}'");
             labelUserName.Text = table.Rows[0].Field<string>("Username");
             pictureBoxProfile.Image = ConvertByteArrayToImage(table.Rows[0].Field<byte[]>("Photo"));
-            labelBalance.Text = "На счету: " + Math.Round(table.Rows[0].Field<decimal>("Balance"),2).ToString();
         }
 
         private void RoundElements()
         {
             SetRoundedShape(panelControl, 35);
+            SetRoundedShape(panel29, 35);
             SetRoundedShape(panelMyGames, 20);
             SetRoundedShape(pictureBoxMP, 20);
             SetRoundedShape(panelMyFollows, 20);
+            SetRoundedShape(panel28, 15);
+            SetRoundedShape(panel35, 15);
             for (int i = 0; i < Panels.Length; i++)
             {
                 SetRoundedShape(Panels[i], 10);
@@ -111,8 +112,6 @@ namespace GameLibrary
             {
                 SetRoundedShape(PBTrending[i], 15);
             }
-            SetRoundedShape(panel28, 15);
-            SetRoundedShape(panel35, 15);
             for (int i = 0; i < 6; i++)
             {
                 SetRoundedShape(PanelsFollow[i], 15);
@@ -178,36 +177,6 @@ namespace GameLibrary
             }
         }
 
-
-
-
-
-
-
-
-
-        public void SetPhoto()
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog() { Filter = "Image Files (*.png *.jpg *.jpeg) |*.png; *.jpg; *.jpeg", Multiselect = false })
-            {
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    pictureBox1.Image = Image.FromFile(ofd.FileName);
-                }
-            }
-            //Insert(ConvertImageToBytes(pictureBox1.Image), Int32.Parse(textBox1.Text));
-        }
-        public void Insert(byte[] image, string currentID)
-        {
-            using (SqlCommand cmd = new SqlCommand("Update [User] Set Photo = @image Where Username = @currentID", connection))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@image", image);
-                cmd.Parameters.AddWithValue("@currentID", currentID);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         byte[] ConvertImageToBytes(Image img)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -219,19 +188,19 @@ namespace GameLibrary
 
         public Image ConvertByteArrayToImage(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            try
             {
-                return
-                Image.FromStream(ms);
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    return
+                    Image.FromStream(ms);
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
-
-
-
-
-
-
-
 
         private void GetTableByQuery(string sqlQ)
         {
@@ -308,9 +277,10 @@ namespace GameLibrary
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18), Username,connection);
+            GamePageForm obj = new GamePageForm(Int32.Parse(selectedPB.Name.Substring(10))-1+(currentPage*18), Username, accessLevel, connection);
             obj.ShowDialog();
             SetMyGames();
+            SetMyProflePage();
         }
 
         private void pictureBoxRight_Click(object sender, EventArgs e)
@@ -350,7 +320,7 @@ namespace GameLibrary
         private void pictureBoxTrend1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            GamePageForm obj = new GamePageForm(TrendingTable.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), Username, connection);
+            GamePageForm obj = new GamePageForm(TrendingTable.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), Username, accessLevel,connection);
             obj.ShowDialog();
             SetMyGames();
         }
@@ -409,10 +379,10 @@ namespace GameLibrary
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
             dataGridView1.RowTemplate.MinimumHeight = 50;
             dataGridView1.Columns[0].Width = 200;
-            dataGridView1.Columns[1].Width = 420;
+            dataGridView1.Columns[1].Width = 405;
             dataGridView1.Columns[2].Width = 80;
             dataGridView1.Columns[3].Width = 90;
-            dataGridView1.Enabled = false;
+            dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Silver;
             dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
@@ -569,7 +539,9 @@ namespace GameLibrary
 
         private void pictureBoxFollows1_Click(object sender, EventArgs e)
         {
-
+            PictureBox selectedPB = sender as PictureBox;
+            ProfileForm obj = new ProfileForm(labelsFollowing[Convert.ToInt32(selectedPB.Name.Substring(17)) - 1].Text, accessLevel,connection);
+            obj.ShowDialog();
         }
 
         private void pictureBoxMP_MouseEnter(object sender, EventArgs e)
@@ -586,7 +558,7 @@ namespace GameLibrary
         {
             PictureBox selectedPB = sender as PictureBox;
             GetTableByQuery($"SELECT * FROM Game WHERE Name = '{labelsMyGames[Convert.ToInt32(selectedPB.Name.Substring(12)) - 1].Text}'");            
-            GamePageForm obj = new GamePageForm(table.Rows[0].Field<int>("ID"), Username, connection);
+            GamePageForm obj = new GamePageForm(table.Rows[0].Field<int>("ID"), Username, accessLevel, connection);
             obj.ShowDialog();
             SetMyGames();
         }
@@ -598,6 +570,29 @@ namespace GameLibrary
         }
 
         private void pictureBoxMP1_MouseLeave(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width + 1, selectedPB.Height + 1);
+        }
+
+        private void buttonAddGame_Click(object sender, EventArgs e)
+        {
+            GameAddingForm obj = new GameAddingForm(connection);
+            obj.ShowDialog();
+        }
+
+        private void pictureBoxProfile_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void pictureBoxLeft_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox selectedPB = sender as PictureBox;
+            selectedPB.Size = new Size(selectedPB.Width - 1, selectedPB.Height - 1);
+        }
+
+        private void pictureBoxLeft_MouseLeave(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
             selectedPB.Size = new Size(selectedPB.Width + 1, selectedPB.Height + 1);

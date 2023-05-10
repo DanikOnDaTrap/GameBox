@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameLibrary
 {
     public partial class GamePageForm : Form
     {
+        int accessLevel = 0;
         SqlConnection connection;
         DataTable table;
         DataTable tempTable;
@@ -25,18 +21,14 @@ namespace GameLibrary
         string Username;
         bool inCollection = false;
 
-        public GamePageForm(int productID, string uname, SqlConnection cn)
+        public GamePageForm(int productID, string uname, int Role, SqlConnection cn)
         {
             InitializeComponent();
             gameID = productID;
             connection = cn;
             Username = uname;
-
-            GetTableByQuery($"SELECT * FROM GAME WHERE ID = {gameID}"); table = tempTable;
-            GetTableByQuery($"SELECT Category.Name FROM Game INNER JOIN Category ON Game.CategoryID = Category.ID WHERE Game.ID = {gameID}"); subTableCategory = tempTable;
-            GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
-            GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN [User] ON [User].Username = Review.UserID WHERE GameID = {gameID}"); subTableReview = tempTable;
-            GetTableByQuery($"SELECT * FROM Purchase WHERE UserID = '{uname}'"); subTableCollection = tempTable;
+            accessLevel = Role;
+ 
             LoadData();
             SetDesign();
         }
@@ -72,16 +64,23 @@ namespace GameLibrary
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
             dataGridView1.RowTemplate.MinimumHeight = 50;
             dataGridView1.Columns[0].Width = 170;
-            dataGridView1.Columns[1].Width = 655;
+            dataGridView1.Columns[1].Width = 653;
             dataGridView1.Columns[2].Width = 90;
-            dataGridView1.Enabled = false;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Silver;
             dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
+            if (accessLevel == 0)
+                dataGridView1.ReadOnly = true;
         }
 
         private void LoadData()
         {
+            GetTableByQuery($"SELECT * FROM GAME WHERE ID = {gameID}"); table = tempTable;
+            GetTableByQuery($"SELECT Category.Name FROM Game INNER JOIN Category ON Game.CategoryID = Category.ID WHERE Game.ID = {gameID}"); subTableCategory = tempTable;
+            GetTableByQuery($"SELECT Developer.Name FROM Game INNER JOIN Developer ON Game.DeveloperID = Developer.ID WHERE Game.ID = {gameID}"); subTableDeveloper = tempTable;
+            GetTableByQuery($"SELECT Username AS Пользователь, [Text] AS Отзыв, Score AS Оценка FROM Review INNER JOIN [User] ON [User].Username = Review.UserID WHERE GameID = {gameID}"); subTableReview = tempTable;
+            GetTableByQuery($"SELECT * FROM Purchase WHERE UserID = '{Username}'"); subTableCollection = tempTable;
+
             labelName.Text = table.Rows[0].Field<string>("Name");
             this.Text = table.Rows[0].Field<string>("Name");
             labelDescription.Text = table.Rows[0].Field<string>("Description");
@@ -163,7 +162,6 @@ namespace GameLibrary
             }
             buttonAddToCart.Text = "Добавить в коллекцию";
             inCollection = false;
-            
         }
 
         private void GamePageForm_Load(object sender, EventArgs e)
@@ -191,6 +189,27 @@ namespace GameLibrary
             path.AddLine(0, control.Height - radius, 0, radius);
             path.AddArc(0, 0, radius, radius, 180, 90);
             control.Region = new Region(path);
+        }
+
+        private void buttonAddReview_Click(object sender, EventArgs e)
+        {
+            ReviewForm obj = new ReviewForm(connection, labelName.Text, gameID, Username);
+            obj.ShowDialog();
+            LoadData();
+        }
+
+        private void dataGridView1_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Удалить отзыв?", "Модерация", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                using (SqlCommand cmd = new SqlCommand($"DELETE FROM Review WHERE UserID = '{dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Cells[0].Value.ToString()}' AND Text = '{dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Cells[1].Value.ToString()}'", connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                LoadData();
+            }
         }
     }
 }

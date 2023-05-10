@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameLibrary
@@ -26,7 +20,7 @@ namespace GameLibrary
         {
             try
             {
-                using (SqlCommand cmd = new SqlCommand($"INSERT [User] VALUES ('{textBoxUsername.Text}', '{textBoxLogin.Text}', '{textBoxPassword.Text}', 0,0,NULL,NULL,NULL) ", connection))
+                using (SqlCommand cmd = new SqlCommand($"INSERT [User] VALUES ('{textBoxUsername.Text}', '{textBoxLogin.Text}', '{Hashing.hashPassword(textBoxPassword.Text)}', 0, 0, NULL, NULL, NULL) ", connection))
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();

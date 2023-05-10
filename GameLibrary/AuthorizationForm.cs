@@ -2,14 +2,14 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Reflection.Emit;
 using System.Windows.Forms;
+
 
 namespace GameLibrary
 {
     public partial class AuthorizationForm : Form
     {
-        public SqlConnection cn;
+        SqlConnection cn;
         DataTable table;
         private string textCaptcha = String.Empty;
         bool captchaRequired = false;
@@ -26,14 +26,9 @@ namespace GameLibrary
         {
             try
             {
-                SqlConnectionStringBuilder connect = new SqlConnectionStringBuilder();
-                connect.InitialCatalog = "GameLibDB";
-                connect.DataSource = @"SHEVELEVPC\SQLEXPRESS";
-                connect.ConnectTimeout = 5;
-                connect.IntegratedSecurity = true;
-                cn = new SqlConnection();
-                cn.ConnectionString = connect.ConnectionString;
-                cn.Open();
+                DataBaseAPI obj = new DataBaseAPI("GameLibDB", "SHEVELEVPC\\SQLEXPRESS");
+                obj.OpenConnection();
+                cn = obj.GetConnection();
             }
             catch
             {
@@ -48,16 +43,15 @@ namespace GameLibrary
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            // username"shev"
-            string querySQL = $"SELECT Username FROM [USER] WHERE Login = '{"DanikOnDaTrap"}' AND Password = '{"shev"}'";  // Авторизация
-
+            string querySQL = $"SELECT Username, RoleID FROM [USER] WHERE Login = '{textBoxLogin.Text}' AND Password = '{Hashing.hashPassword(textBoxPassword.Text)}'";  // Авторизация
+            
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(querySQL, cn);
             table = new DataTable();
-
+            
             adapter.SelectCommand = cmd;
             adapter.Fill(table);
-
+            
             if (captchaRequired == false)
             {
                 if (table.Rows.Count == 0)
@@ -89,6 +83,7 @@ namespace GameLibrary
                 }
             }
         }
+
         private void CaptchaFieldUPD()
         {
             captchaRequired = !captchaRequired;
@@ -97,7 +92,7 @@ namespace GameLibrary
 
         private void MWOpen()
         {
-            MainWindow obj = new MainWindow(table.Rows[0].Field<string>("Username"), cn);
+            MainWindow obj = new MainWindow(table.Rows[0].Field<string>("Username"), table.Rows[0].Field<int>("RoleID"), cn);
             obj.ShowDialog();
         }
         private void labelRegistration_Click(object sender, EventArgs e)

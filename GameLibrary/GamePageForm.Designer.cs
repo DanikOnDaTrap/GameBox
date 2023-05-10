@@ -285,6 +285,7 @@
             this.dataGridView1.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.Size = new System.Drawing.Size(931, 189);
             this.dataGridView1.TabIndex = 38;
+            this.dataGridView1.Click += new System.EventHandler(this.dataGridView1_Click);
             // 
             // buttonAddReview
             // 
@@ -296,6 +297,7 @@
             this.buttonAddReview.TabIndex = 39;
             this.buttonAddReview.Text = "Добавить отзыв";
             this.buttonAddReview.UseVisualStyleBackColor = false;
+            this.buttonAddReview.Click += new System.EventHandler(this.buttonAddReview_Click);
             // 
             // GamePageForm
             // 
@@ -326,7 +328,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "GamePageForm";
-            this.Text = "GamePageForm";
+            this.Text = "GameBox";
             this.Load += new System.EventHandler(this.GamePageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlatform2)).EndInit();
