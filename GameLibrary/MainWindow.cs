@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace GameLibrary
@@ -13,6 +14,12 @@ namespace GameLibrary
         int accessLevel = 0;
         int MGincrementation = 0;
         int FollowingIncrementation = 0;
+        int currentPage = 0;
+        int currentPageMG = 0;
+        int currentPageFollowing = 0;
+        int minGameID = 0;
+        int maxGameID = 18;
+        bool EditingInProgress = false;
         SqlConnection connection;
         DataTable table;
         DataTable FullProductTable;
@@ -35,12 +42,7 @@ namespace GameLibrary
         Panel[] PanelsTrends;
         Panel[] panelsMyGames;
         Panel[] PanelsFollow;
-        int currentPage = 0;
-        int currentPageMG = 0;
-        int currentPageFollowing = 0;
-        int minGameID = 0;
-        int maxGameID = 18;
-        bool EditingInProgress = false;
+        
 
         public MainWindow(string UserID, int Role, SqlConnection sqlCon)
         {
@@ -69,6 +71,7 @@ namespace GameLibrary
 
             pictureBoxPrevMG.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             pictureBoxNextMG.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            TextBoxWatermarkExtensionMethod.SetWatermark(textBoxSearch, "Имя пользователя");
 
             GetProfile();
             SetMyGames();
@@ -323,6 +326,7 @@ namespace GameLibrary
             GamePageForm obj = new GamePageForm(TrendingTable.Rows[Convert.ToInt32(selectedPB.Name.Substring(selectedPB.Name.Length - 1)) - 1].Field<int>("ID"), Username, accessLevel,connection);
             obj.ShowDialog();
             SetMyGames();
+            SetMyProflePage();
         }
 
         private void pictureBoxTrend1_MouseEnter(object sender, EventArgs e)
@@ -540,8 +544,9 @@ namespace GameLibrary
         private void pictureBoxFollows1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            ProfileForm obj = new ProfileForm(labelsFollowing[Convert.ToInt32(selectedPB.Name.Substring(17)) - 1].Text, accessLevel,connection);
+            ProfileForm obj = new ProfileForm(labelsFollowing[Convert.ToInt32(selectedPB.Name.Substring(17)) - 1].Text, Username, accessLevel,connection);
             obj.ShowDialog();
+            SetFollows();
         }
 
         private void pictureBoxMP_MouseEnter(object sender, EventArgs e)
@@ -561,6 +566,7 @@ namespace GameLibrary
             GamePageForm obj = new GamePageForm(table.Rows[0].Field<int>("ID"), Username, accessLevel, connection);
             obj.ShowDialog();
             SetMyGames();
+            SetMyProflePage();
         }
 
         private void pictureBoxMP1_MouseEnter(object sender, EventArgs e)
@@ -597,5 +603,24 @@ namespace GameLibrary
             PictureBox selectedPB = sender as PictureBox;
             selectedPB.Size = new Size(selectedPB.Width + 1, selectedPB.Height + 1);
         }
-    }    
+
+        private void pictureBoxSearch_Click(object sender, EventArgs e)
+        {
+            GetTableByQuery($"SELECT * FROM [User] WHERE Username = '{textBoxSearch.Text}'");
+            if (table.Rows.Count != 0)
+            {
+                using (SqlCommand cmd = new SqlCommand($"INSERT Following VALUES ('{table.Rows[0].Field<string>("Username")}','{this.Username}') ", connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                MessageBox.Show($"Вы подписались на {table.Rows[0].Field<string>("Username")}", "");
+                SetFollows();
+            }
+            else
+            {
+                MessageBox.Show("Пользователя с таким именем не существует!", "Ошибка!");
+            }
+        }
+    }
 }

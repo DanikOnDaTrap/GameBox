@@ -43,8 +43,8 @@ namespace GameLibrary
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            string querySQL = $"SELECT Username, RoleID FROM [USER] WHERE Login = '{textBoxLogin.Text}' AND Password = '{Hashing.hashPassword(textBoxPassword.Text)}'";  // Авторизация
-            
+            //string querySQL = $"SELECT Username, RoleID FROM [USER] WHERE Login = '{textBoxLogin.Text}' AND Password = '{Hashing.hashPassword(textBoxPassword.Text)}'";  // Авторизация
+            string querySQL = $"SELECT Username, RoleID FROM [USER] WHERE Login = '{"DanikOnDaTrap"}' AND Password = '{Hashing.hashPassword("shevelev")}'";
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(querySQL, cn);
             table = new DataTable();

@@ -107,6 +107,7 @@
     <Compile Include="ReviewForm.Designer.cs">
       <DependentUpon>ReviewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextBoxHelper.cs" />
     <EmbeddedResource Include="AuthorizationForm.resx">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -192,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Res\placeholderMP.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Res\lupa.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

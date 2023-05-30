@@ -29,7 +29,7 @@ namespace GameLibrary
             GetTableByQuery("SELECT * FROM Review");
             try
             {
-                using (SqlCommand cmd = new SqlCommand($"INSERT Review VALUES ('{userID}', {gameID}, '{DateTime.Now}', '{textBoxReview.Text}', {Convert.ToDecimal(textBoxScore.Text)})", connection))
+                using (SqlCommand cmd = new SqlCommand($"INSERT Review VALUES ({table.Rows.Count},'{userID}', {gameID}, '{DateTime.Now}', '{textBoxReview.Text}', {Convert.ToDecimal(textBoxScore.Text)})", connection))
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
@@ -40,7 +40,6 @@ namespace GameLibrary
             {
                 MessageBox.Show("Ошибка при добавлении отзыва", "Внимание");
             }
-            
         }
         private void GetTableByQuery(string sqlQ)
         {

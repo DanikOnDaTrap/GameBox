@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
             this.label39 = new System.Windows.Forms.Label();
             this.panelMyFollows = new System.Windows.Forms.Panel();
             this.panel28 = new System.Windows.Forms.Panel();
@@ -81,11 +82,11 @@
             this.pictureBoxMP1 = new System.Windows.Forms.PictureBox();
             this.label37 = new System.Windows.Forms.Label();
             this.textBoxActualName = new System.Windows.Forms.TextBox();
-            this.buttonAbotMe = new System.Windows.Forms.Button();
             this.textBoxAboutMe = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelNameMP = new System.Windows.Forms.Label();
             this.pictureBoxMP = new System.Windows.Forms.PictureBox();
+            this.buttonAbotMe = new System.Windows.Forms.Button();
             this.panelMyFollows.SuspendLayout();
             this.panel28.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollowingNext)).BeginInit();
@@ -691,17 +692,6 @@
             this.textBoxActualName.Size = new System.Drawing.Size(460, 20);
             this.textBoxActualName.TabIndex = 54;
             // 
-            // buttonAbotMe
-            // 
-            this.buttonAbotMe.BackColor = System.Drawing.Color.Silver;
-            this.buttonAbotMe.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAbotMe.Location = new System.Drawing.Point(342, 265);
-            this.buttonAbotMe.Name = "buttonAbotMe";
-            this.buttonAbotMe.Size = new System.Drawing.Size(464, 41);
-            this.buttonAbotMe.TabIndex = 53;
-            this.buttonAbotMe.Text = "Редактировать данные профиля";
-            this.buttonAbotMe.UseVisualStyleBackColor = false;
-            // 
             // textBoxAboutMe
             // 
             this.textBoxAboutMe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
@@ -711,41 +701,41 @@
             this.textBoxAboutMe.Multiline = true;
             this.textBoxAboutMe.Name = "textBoxAboutMe";
             this.textBoxAboutMe.ReadOnly = true;
-            this.textBoxAboutMe.Size = new System.Drawing.Size(464, 158);
+            this.textBoxAboutMe.Size = new System.Drawing.Size(464, 164);
             this.textBoxAboutMe.TabIndex = 52;
             // 
             // dataGridView1
             // 
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.GridColor = System.Drawing.Color.Gray;
             this.dataGridView1.Location = new System.Drawing.Point(12, 355);
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.Size = new System.Drawing.Size(794, 548);
             this.dataGridView1.TabIndex = 51;
@@ -772,6 +762,18 @@
             this.pictureBoxMP.TabIndex = 50;
             this.pictureBoxMP.TabStop = false;
             // 
+            // buttonAbotMe
+            // 
+            this.buttonAbotMe.BackColor = System.Drawing.Color.Silver;
+            this.buttonAbotMe.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAbotMe.Location = new System.Drawing.Point(342, 271);
+            this.buttonAbotMe.Name = "buttonAbotMe";
+            this.buttonAbotMe.Size = new System.Drawing.Size(468, 35);
+            this.buttonAbotMe.TabIndex = 53;
+            this.buttonAbotMe.Text = "Подписаться";
+            this.buttonAbotMe.UseVisualStyleBackColor = false;
+            this.buttonAbotMe.Click += new System.EventHandler(this.buttonAbotMe_Click);
+            // 
             // ProfileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -789,8 +791,11 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.labelNameMP);
             this.Controls.Add(this.pictureBoxMP);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "ProfileForm";
-            this.Text = "ProfileForm";
+            this.Text = "GameBox";
+            this.Load += new System.EventHandler(this.ProfileForm_Load);
             this.panelMyFollows.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
@@ -884,10 +889,10 @@
         private System.Windows.Forms.PictureBox pictureBoxMP1;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.TextBox textBoxActualName;
-        private System.Windows.Forms.Button buttonAbotMe;
         private System.Windows.Forms.TextBox textBoxAboutMe;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label labelNameMP;
         private System.Windows.Forms.PictureBox pictureBoxMP;
+        private System.Windows.Forms.Button buttonAbotMe;
     }
 }

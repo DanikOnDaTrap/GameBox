@@ -1,7 +1,7 @@
 GameBox
 Данные для входа в систему(Admin):
-Login: shev
-Password: shev
+Login: Administrator
+Password: administrator123
 
 Процессор: не менее 1 ГГц или SoC
 

@@ -10,27 +10,29 @@ namespace GameLibrary
     public partial class ProfileForm : Form
     {
         string Username;
+        string SenderUsername;
         int accessLevel;
+        int currentPageMG = 0;
+        int currentPageFollowing = 0;
+        int MGincrementation = 0;
+        int FollowingIncrementation = 0;
         SqlConnection connection;
         DataTable table;
         Label[] labelsMyGames;
         Label[] labelsFollowing;
         PictureBox[] picBoxesMyGames;
         PictureBox[] PBFollows;
-        int MGincrementation = 0;
-        int FollowingIncrementation = 0;
         Panel[] panelsMyGames;
         Panel[] PanelsFollow;
-        int currentPageMG = 0;
-        int currentPageFollowing = 0;
+        
 
-        public ProfileForm(string usName, int Role, SqlConnection cn)
+        public ProfileForm(string usName, string usNameSender ,int Role, SqlConnection cn)
         {
             InitializeComponent();
             Username = usName;
             connection = cn;
             accessLevel = Role;
-            
+            SenderUsername = usNameSender;
 
             labelsMyGames = new[] { labelMP1, labelMP2, labelMP3, labelMP4, labelMP5, labelMP6 };
             picBoxesMyGames = new[] { pictureBoxMP1, pictureBoxMP2, pictureBoxMP3, pictureBoxMP4, pictureBoxMP5, pictureBoxMP6 };
@@ -222,8 +224,9 @@ namespace GameLibrary
         private void pictureBoxFollows1_Click(object sender, EventArgs e)
         {
             PictureBox selectedPB = sender as PictureBox;
-            ProfileForm obj = new ProfileForm(labelsFollowing[Convert.ToInt32(selectedPB.Name.Substring(17)) - 1].Text, accessLevel, connection);
+            ProfileForm obj = new ProfileForm(labelsFollowing[Convert.ToInt32(selectedPB.Name.Substring(17)) - 1].Text, SenderUsername, accessLevel, connection);
             obj.ShowDialog();
+            SetFollows();
         }
 
         private void pictureBoxFollows4_MouseEnter(object sender, EventArgs e)
@@ -262,6 +265,37 @@ namespace GameLibrary
             path.AddLine(0, control.Height - radius, 0, radius);
             path.AddArc(0, 0, radius, radius, 180, 90);
             control.Region = new Region(path);
+        }
+
+        private void buttonAbotMe_Click(object sender, EventArgs e)
+        {
+            if (buttonAbotMe.Text == "Отписаться")
+            {
+                using (SqlCommand cmd = new SqlCommand($"DELETE FROM Following WHERE HostID = '{Username}' AND FollowerID = '{SenderUsername}'", connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                buttonAbotMe.Text = "Подписаться";
+            }
+            else
+            {
+                using (SqlCommand cmd = new SqlCommand($"INSERT Following VALUES ('{Username}','{SenderUsername}')", connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                buttonAbotMe.Text = "Отписаться";
+            }
+        }
+
+        private void ProfileForm_Load(object sender, EventArgs e)
+        {
+            GetTableByQuery($"SELECT * FROM Following WHERE HostID = '{Username}' AND FollowerID = '{SenderUsername}'");
+            if (table.Rows.Count != 0)
+            {
+                buttonAbotMe.Text = "Отписаться";
+            }
         }
     }
 }

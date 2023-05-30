@@ -34,6 +34,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStore = new System.Windows.Forms.TabPage();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.buttonAddGame = new System.Windows.Forms.Button();
             this.panelControl = new System.Windows.Forms.Panel();
             this.labelCurrentPage = new System.Windows.Forms.Label();
             this.labelUserName = new System.Windows.Forms.Label();
@@ -102,6 +104,7 @@
             this.labelTrendDesc1 = new System.Windows.Forms.Label();
             this.labelTrend1 = new System.Windows.Forms.Label();
             this.tabPageMyPage = new System.Windows.Forms.TabPage();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.panelMyFollows = new System.Windows.Forms.Panel();
             this.panel28 = new System.Windows.Forms.Panel();
@@ -140,7 +143,7 @@
             this.textBoxAboutMe = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelNameMP = new System.Windows.Forms.Label();
-            this.buttonAddGame = new System.Windows.Forms.Button();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
             this.pictureBoxLeft = new System.Windows.Forms.PictureBox();
             this.pictureBoxRight = new System.Windows.Forms.PictureBox();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
@@ -174,6 +177,7 @@
             this.pictureBoxPlat2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxPlat3 = new System.Windows.Forms.PictureBox();
             this.pictureBoxTrend1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxSearch = new System.Windows.Forms.PictureBox();
             this.pictureBoxFollowingNext = new System.Windows.Forms.PictureBox();
             this.pictureBoxFollowingPrev = new System.Windows.Forms.PictureBox();
             this.pictureBoxFollows6 = new System.Windows.Forms.PictureBox();
@@ -191,10 +195,9 @@
             this.pictureBoxMP2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxMP1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxMP = new System.Windows.Forms.PictureBox();
-            this.panel29 = new System.Windows.Forms.Panel();
-            this.pictureBox19 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPageStore.SuspendLayout();
+            this.panel29.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -236,6 +239,7 @@
             this.panel23.SuspendLayout();
             this.panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -269,6 +273,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlat2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlat3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrend1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollowingNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollowingPrev)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollows6)).BeginInit();
@@ -286,8 +291,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP)).BeginInit();
-            this.panel29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -334,6 +337,27 @@
             this.tabPageStore.Size = new System.Drawing.Size(1620, 921);
             this.tabPageStore.TabIndex = 0;
             this.tabPageStore.Text = "Каталог";
+            // 
+            // panel29
+            // 
+            this.panel29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
+            this.panel29.Controls.Add(this.pictureBox19);
+            this.panel29.Location = new System.Drawing.Point(1398, 173);
+            this.panel29.Name = "panel29";
+            this.panel29.Size = new System.Drawing.Size(210, 600);
+            this.panel29.TabIndex = 27;
+            // 
+            // buttonAddGame
+            // 
+            this.buttonAddGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
+            this.buttonAddGame.Location = new System.Drawing.Point(1398, 112);
+            this.buttonAddGame.Name = "buttonAddGame";
+            this.buttonAddGame.Size = new System.Drawing.Size(210, 40);
+            this.buttonAddGame.TabIndex = 26;
+            this.buttonAddGame.Text = "Добавить игру";
+            this.buttonAddGame.UseVisualStyleBackColor = false;
+            this.buttonAddGame.Visible = false;
+            this.buttonAddGame.Click += new System.EventHandler(this.buttonAddGame_Click);
             // 
             // panelControl
             // 
@@ -1045,6 +1069,8 @@
             // tabPageMyPage
             // 
             this.tabPageMyPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
+            this.tabPageMyPage.Controls.Add(this.pictureBoxSearch);
+            this.tabPageMyPage.Controls.Add(this.textBoxSearch);
             this.tabPageMyPage.Controls.Add(this.label39);
             this.tabPageMyPage.Controls.Add(this.panelMyFollows);
             this.tabPageMyPage.Controls.Add(this.label38);
@@ -1063,6 +1089,15 @@
             this.tabPageMyPage.TabIndex = 1;
             this.tabPageMyPage.Text = "Мой профиль";
             // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.BackColor = System.Drawing.Color.Silver;
+            this.textBoxSearch.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxSearch.Location = new System.Drawing.Point(1387, 42);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(182, 31);
+            this.textBoxSearch.TabIndex = 49;
+            // 
             // label39
             // 
             this.label39.AutoEllipsis = true;
@@ -1070,7 +1105,7 @@
             this.label39.BackColor = System.Drawing.Color.Transparent;
             this.label39.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label39.ForeColor = System.Drawing.Color.Black;
-            this.label39.Location = new System.Drawing.Point(1131, 32);
+            this.label39.Location = new System.Drawing.Point(857, 42);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(213, 33);
             this.label39.TabIndex = 48;
@@ -1248,7 +1283,7 @@
             this.label38.BackColor = System.Drawing.Color.Transparent;
             this.label38.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label38.ForeColor = System.Drawing.Color.Black;
-            this.label38.Location = new System.Drawing.Point(1126, 325);
+            this.label38.Location = new System.Drawing.Point(861, 325);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(218, 33);
             this.label38.TabIndex = 46;
@@ -1499,17 +1534,15 @@
             this.labelNameMP.TabIndex = 21;
             this.labelNameMP.Text = "USERNAME TEMPLATE";
             // 
-            // buttonAddGame
+            // pictureBox19
             // 
-            this.buttonAddGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
-            this.buttonAddGame.Location = new System.Drawing.Point(1398, 112);
-            this.buttonAddGame.Name = "buttonAddGame";
-            this.buttonAddGame.Size = new System.Drawing.Size(210, 40);
-            this.buttonAddGame.TabIndex = 26;
-            this.buttonAddGame.Text = "Добавить игру";
-            this.buttonAddGame.UseVisualStyleBackColor = false;
-            this.buttonAddGame.Visible = false;
-            this.buttonAddGame.Click += new System.EventHandler(this.buttonAddGame_Click);
+            this.pictureBox19.Image = global::GameLibrary.Properties.Resources.boxmainlogo;
+            this.pictureBox19.Location = new System.Drawing.Point(12, 150);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(183, 266);
+            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox19.TabIndex = 2;
+            this.pictureBox19.TabStop = false;
             // 
             // pictureBoxLeft
             // 
@@ -1903,6 +1936,17 @@
             this.pictureBoxTrend1.MouseEnter += new System.EventHandler(this.pictureBoxTrend1_MouseEnter);
             this.pictureBoxTrend1.MouseLeave += new System.EventHandler(this.pictureBoxTrend1_MouseLeave);
             // 
+            // pictureBoxSearch
+            // 
+            this.pictureBoxSearch.Image = global::GameLibrary.Properties.Resources.lupa;
+            this.pictureBoxSearch.Location = new System.Drawing.Point(1582, 42);
+            this.pictureBoxSearch.Name = "pictureBoxSearch";
+            this.pictureBoxSearch.Size = new System.Drawing.Size(31, 31);
+            this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxSearch.TabIndex = 50;
+            this.pictureBoxSearch.TabStop = false;
+            this.pictureBoxSearch.Click += new System.EventHandler(this.pictureBoxSearch_Click);
+            // 
             // pictureBoxFollowingNext
             // 
             this.pictureBoxFollowingNext.Image = global::GameLibrary.Properties.Resources.strelkaRight;
@@ -2118,25 +2162,6 @@
             this.pictureBoxMP.MouseEnter += new System.EventHandler(this.pictureBoxMP_MouseEnter);
             this.pictureBoxMP.MouseLeave += new System.EventHandler(this.pictureBoxMP_MouseLeave);
             // 
-            // panel29
-            // 
-            this.panel29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(158)))), ((int)(((byte)(140)))));
-            this.panel29.Controls.Add(this.pictureBox19);
-            this.panel29.Location = new System.Drawing.Point(1398, 173);
-            this.panel29.Name = "panel29";
-            this.panel29.Size = new System.Drawing.Size(210, 600);
-            this.panel29.TabIndex = 27;
-            // 
-            // pictureBox19
-            // 
-            this.pictureBox19.Image = global::GameLibrary.Properties.Resources.boxmainlogo;
-            this.pictureBox19.Location = new System.Drawing.Point(12, 150);
-            this.pictureBox19.Name = "pictureBox19";
-            this.pictureBox19.Size = new System.Drawing.Size(183, 266);
-            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox19.TabIndex = 2;
-            this.pictureBox19.TabStop = false;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2151,6 +2176,7 @@
             this.Text = "GameBox";
             this.tabControl1.ResumeLayout(false);
             this.tabPageStore.ResumeLayout(false);
+            this.panel29.ResumeLayout(false);
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
             this.panel13.ResumeLayout(false);
@@ -2217,6 +2243,7 @@
             this.panel23.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
@@ -2250,6 +2277,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlat2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlat3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrend1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollowingNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollowingPrev)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFollows6)).EndInit();
@@ -2267,8 +2295,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMP)).EndInit();
-            this.panel29.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2436,5 +2462,7 @@
         private System.Windows.Forms.Button buttonAddGame;
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.PictureBox pictureBox19;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.PictureBox pictureBoxSearch;
     }
 }
